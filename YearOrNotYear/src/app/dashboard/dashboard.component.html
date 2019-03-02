@@ -1,0 +1,94 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <label for="dateOfBirth">Date of birth</label>
+                <div class="input-group">
+                    <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    </div>
+</ng-template>
+
+<div class="container-fluid" style="margin-top: 80px; height: 100%;">
+    <div class="row">
+        <div class="col-lg-6 col-md-6" style="width: 100%">
+            <div class="example-list"
+                 style="border-bottom: none; border-radius: 0px; background-color: #2962FF; color: white; font-weight: bold; height: 60px !important;">
+                <div style="text-align: center; margin-top: 20px">
+                    Vos module(s)
+                </div>
+            </div>
+            <div class="example-list" style="height: 80%">
+                <div style="margin: 20px 20px 20px 20px"
+                     cdkDropList
+                     #todoList="cdkDropList"
+                     [cdkDropListData]="todo"
+                     [cdkDropListConnectedTo]="[doneList]"
+                     class="example-list scrollbar scrollbar-primary"
+                     (cdkDropListDropped)="drop($event)">
+                    <div class="example-box" *ngFor="let item of todo" cdkDrag>{{item}}
+                        <div style="float: right">
+                            <i style="color: rgba(0, 0, 0, 0.87); margin-right: 20px; cursor: pointer"
+                               (click)="open(content)" class="ion ion-ios-information-circle-outline"></i>
+                            5 Crédits
+                        </div>
+                    </div>
+                </div>
+                <div style="float: left; margin: 20px">
+                    Total crédit:
+                </div>
+                <div style="float: right; margin: 20px">
+                    60
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6" style="width: 100%">
+            <div class="example-list"
+                 style="border-bottom: none; border-radius: 0px; background-color: #2962FF; color: white; font-weight: bold; height: 60px !important;">
+                <div style="text-align: center; margin-top: 20px">
+                    Module disponible(s)
+                </div>
+            </div>
+            <div class="example-list" style="height: 80%">
+                <div class="example-list" style="margin: 20px 20px 20px 20px; border-bottom: 0">
+                    <input class="example-box" placeholder="Rechercher..."
+                           style="padding-left: 10px; width: 100%; background-color: white; color: #949494; height: 60px; border-bottom: 0 !important;"/>
+                </div>
+                <div style="margin: 0px 20px 20px 20px; height: 75%;"
+                     cdkDropList
+                     #doneList="cdkDropList"
+                     [cdkDropListData]="done"
+                     [cdkDropListConnectedTo]="[todoList]"
+                     class="example-list scrollbar scrollbar-primary"
+                     (cdkDropListDropped)="drop($event)">
+                    <div class="example-box" *ngFor="let item of done" cdkDrag>{{item}}
+                        <div style="float: right">
+                            5 Crédits
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 40px">
+                    Un module n'est pas dans la liste ?<br>
+                    <i style="cursor: pointer;" class="ion ion-ios-add-circle-outline"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<router-outlet></router-outlet>

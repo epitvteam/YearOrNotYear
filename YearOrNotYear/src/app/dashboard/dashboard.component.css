@@ -1,23 +1,5 @@
-.example-container {
-  width: 800px;
-  max-width: 100%;
-  height: 100%;
-  margin: 0 25px 25px 0;
-  display: inline-block;
-  vertical-align: top;
-}
-
 .example-list {
-  border: solid 1px #ccc;
-  min-height: 60px;
-  background: white;
-  border-radius: 4px;
-  overflow: hidden;
-  display: block;
-}
-
-.example-list {
-  border: solid 1px #ccc;
+  border: solid 1px #ccc !important;
   min-height: 60px;
   background: white;
   border-radius: 4px;
@@ -37,6 +19,10 @@
   cursor: move;
   background: white;
   font-size: 14px;
+}
+
+.example-box:hover {
+  background: #f5f5f5;
 }
 
 .cdk-drag-preview {
@@ -69,6 +55,7 @@
   overflow-y: scroll;
   margin-bottom: 25px;
 }
+
 .force-overflow {
   min-height: 450px;
 }
@@ -165,3 +152,47 @@
   border-radius: 10px;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
   background-color: #aa66cc; }
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 60px;
+  width: 100%;
+  color: white;
+  background-color: #2962FF;
+  box-sizing: border-box;
+  padding: 12px 18px;
+  box-shadow: 0px 4px 7px #777;
+  transition: background-color 0.4s ease-out;
+}
+
+nav span {
+  font-weight: 600;
+  letter-spacing: .085em;
+  line-height: 40px;
+}
+
+nav div {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 5px;
+  height: 50px;
+  width: 50px;
+  color: white;
+}
+
+nav .name {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 5px;
+  height: 50px;
+  width: 50px;
+  background-color: #eee;
+  color: #2962FF;
+  border-radius: 50%;
+  margin-right: 18px;
+  text-transform: uppercase;
+}
