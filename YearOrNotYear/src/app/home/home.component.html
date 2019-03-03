@@ -1,27 +1,39 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Connection</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" style="display: block; margin : auto;">
+        <button style="background-color: #46CEFC; color: white; padding: 10px; margin-top: 20px; margin-bottom: 20px" type="button" class="btn btn-primary btn-round d-block"><i style="color: white" class="ion ion-ios-power"></i>&nbsp;&nbsp;Se connecter avec Office 365</button>
+    </div>
+</ng-template>
+
 <div class="container-fluid">
     <div class="title" style="display: inline-block; text-align: left; color: #46CEFC; margin-top: 40px; margin-left: 10%">
-        <div style="font-size: 47px; line-height: 0;">YearOrNotYear</div>
+        <div style="font-size: 2vw; line-height: 0;">YearOrNotYear</div>
         <br>
-        An Epitech Project for Epitech Students
+        <div style="font-size: 0.7vw;">An Epitech Project for Epitech Students</div>
     </div>
-    <div class="title" style="float: right; display: inline-block; text-align: right; color: #46CEFC; margin-top: 40px; margin-right: 10%; cursor: pointer">
+    <div (click)="open(content)" class="title" style="float: right; display: inline-block; text-align: right; color: #46CEFC; margin-top: 40px; margin-right: 10%; cursor: pointer">
         Sign In
     </div>
-    <div class="row" style="margin-top: 200px; margin-left: 10%">
-        <div class="col-lg-6" style="color: #46CEFC;">
+    <div class="row" style="margin-top: 100px;">
+        <div class="col-lg-6 col-md-12" style="color: #46CEFC; padding-left: 10%; padding-top: 8%; padding-right: 10%">
             <div style="font-size: 40px; font-weight: bold">Organize your academic year <br>
                 with our revolutionary app<br></div>
             <div style="font-size: 20px">Select only what matters to you !</div><br>
-            <button style="background-color: #46CEFC; color: white" type="button"class="btn btn-primary btn-round d-block">GET STARTED</button>
+            <button (click)="open(content)" style="background-color: #46CEFC; color: white" type="button"class="btn btn-primary btn-round d-block">GET STARTED</button>
         </div>
-        <div class="col-lg-6">
-
+        <div style="text-align: center" class="col-lg-6 col-md-12">
+            <img style="width: 90%" src="../../assets/images/planning.svg"/>
         </div>
     </div>
-    <div class="title" style="color: white; font-size: 25px; text-align: center; margin-top: 190px">
+    <div class="title" style="color: white; font-size: 25px; text-align: center; margin-top: 120px">
         "A great organization is the key of success"
     </div>
-    <div style="color: white; font-size: 15px; text-align: center; margin-top: 220px">
+    <div style="color: white; font-size: 15px; text-align: center; margin-top: 160px">
         © 2019 YearOrNotYear. All rights reserved.
     </div>
 </div>
