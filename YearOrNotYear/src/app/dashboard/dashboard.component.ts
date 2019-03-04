@@ -1,4 +1,5 @@
-import {Component, Renderer2} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
@@ -7,27 +8,21 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
   closeResult: string;
+  public items;
+  public itemsHave;
 
-  constructor(private modalService: NgbModal, private renderer: Renderer2) {
-    this.renderer.setStyle(document.body, 'background-color', 'white');
+  constructor(private http: HttpClient, private modalService: NgbModal) {
   }
-  title = 'YearOrNotYear';
-  todo = [
-    'Get to work',
-    'Pick up groceries',
-    'Go home',
-    'Fall asleep'
-  ];
 
-  done = [
-    'Get up',
-    'Brush teeth',
-    'Take a shower',
-    'Check e-mail',
-    'Walk dog'
-  ];
+  ngOnInit(): void {
+    this.http.get<any>('assets/json/module.json')
+      .subscribe(data => {
+        this.items = data;
+        this.itemsHave = [];
+      });
+  }
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
@@ -54,7 +49,7 @@ export class DashboardComponent {
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       return 'by clicking on a backdrop';
     } else {
-      return  `with: ${reason}`;
+      return `with: ${reason}`;
     }
   }
 }

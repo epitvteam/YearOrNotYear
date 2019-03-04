@@ -43,15 +43,15 @@
                     <div style="height: 715px"
                         cdkDropList
                         #todoList="cdkDropList"
-                        [cdkDropListData]="todo"
+                        [cdkDropListData]="itemsHave"
                         [cdkDropListConnectedTo]="[doneList]"
                         class="example-list scrollbar scrollbar-primary"
                         (cdkDropListDropped)="drop($event)">
-                        <div class="example-box" *ngFor="let item of todo" cdkDrag>{{item}}
+                        <div class="example-box" *ngFor="let data of itemsHave" cdkDrag>{{data.name}}
                             <div style="float: right">
                                 <i style="color: rgba(0, 0, 0, 0.87); margin-right: 20px; cursor: pointer"
                                    (click)="open(content)" class="ion ion-ios-information-circle-outline"></i>
-                                5 Crédits
+                                {{data.cred}} Crédits
                             </div>
                         </div>
                     </div>
@@ -81,13 +81,13 @@
                     <div style="height: 633px"
                         cdkDropList
                         #doneList="cdkDropList"
-                        [cdkDropListData]="done"
+                        [cdkDropListData]="items"
                         [cdkDropListConnectedTo]="[todoList]"
                         class="example-list scrollbar scrollbar-primary"
                         (cdkDropListDropped)="drop($event)">
-                        <div class="example-box" *ngFor="let item of done" cdkDrag>{{item}}
+                        <div class="example-box" *ngFor="let data of items" cdkDrag>{{data.name}}
                             <div style="float: right">
-                                5 Crédits
+                                {{data.cred}} Crédits
                             </div>
                         </div>
                     </div>
