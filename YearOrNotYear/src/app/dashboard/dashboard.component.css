@@ -50,10 +50,8 @@
 }
 
 .scrollbar {
-  height: 85%;
   background: #fff;
   overflow-y: scroll;
-  margin-bottom: 25px;
 }
 
 .force-overflow {
