@@ -4,16 +4,16 @@ import {FormsModule as NgFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
-import {DashboardRoutingModule} from './dashboard-routing.module';
-import { DragDropModule } from '@angular/cdk/drag-drop';
-import {DashboardComponent} from './dashboard.component';
+import {OfficeRoutingModule} from './office-routing.module';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {OfficeComponent} from './office.component';
 
 @NgModule({
   declarations: [
-    DashboardComponent
+    OfficeComponent
   ],
   imports: [
-    DashboardRoutingModule,
+    OfficeRoutingModule,
     NgbModule,
     DragDropModule,
     CommonModule,
@@ -21,5 +21,5 @@ import {DashboardComponent} from './dashboard.component';
     HttpClientModule
   ]
 })
-export class DashboardModule {
+export class OfficeModule {
 }

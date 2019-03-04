@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Renderer2} from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
@@ -10,11 +10,12 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 export class DashboardComponent {
   closeResult: string;
 
-  constructor(private modalService: NgbModal) {}
+  constructor(private modalService: NgbModal, private renderer: Renderer2) {
+    this.renderer.setStyle(document.body, 'background-color', 'white');
+  }
   title = 'YearOrNotYear';
-
   todo = [
-    'S0 - Binary security',
+    'Get to work',
     'Pick up groceries',
     'Go home',
     'Fall asleep'
@@ -24,14 +25,6 @@ export class DashboardComponent {
     'Get up',
     'Brush teeth',
     'Take a shower',
-    'Check e-mail',
-    'Check e-mail',
-    'Check e-mail',
-    'Check e-mail',
-    'Check e-mail',
-    'Check e-mail',
-    'Check e-mail',
-    'Check e-mail',
     'Check e-mail',
     'Walk dog'
   ];
