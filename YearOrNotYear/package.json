@@ -24,6 +24,7 @@
     "@ng-bootstrap/ng-bootstrap": "^4.0.4",
     "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
+    "jquery": "^3.3.1",
     "passport": "^0.4.0",
     "passport-azure-ad-oauth2": "0.0.4",
     "rxjs": "~6.3.3",
