@@ -6,7 +6,17 @@
         </button>
     </div>
     <div class="modal-body" style="display: block; margin : auto;">
-        <a href=""><button style="background-color: #46CEFC; color: white; padding: 10px; margin-top: 20px; margin-bottom: 20px" type="button" class="btn btn-primary btn-round d-block"><i style="color: white" class="ion ion-ios-power"></i>&nbsp;&nbsp;Se connecter avec Office 365</button></a>
+        <form (submit)="loginUser($event)">
+            <input type="text" placeholder="Username" id="username"/>
+            <input type="password" placeholder="Password" id="password"/>
+            <button style="background-color: #46CEFC; color: white; padding: 10px; margin-top: 20px; margin-bottom: 20px" type="submit" value="submit" class="btn btn-primary btn-round d-block"><i style="color: white" class="ion ion-ios-power"></i>&nbsp;&nbsp;Se connecter</button>
+        </form>
+        <form (submit)="RegisterUser($event)">
+            <input type="text" placeholder="Username" id="Rusername"/>
+            <input type="password" placeholder="Password" id="Rpassword"/>
+            <input type="password" placeholder="Password" id="Rcpassword"/>
+            <button style="background-color: #46CEFC; color: white; padding: 10px; margin-top: 20px; margin-bottom: 20px" type="submit" value="submit" class="btn btn-primary btn-round d-block"><i style="color: white" class="ion ion-ios-power"></i>&nbsp;&nbsp;Se connecter</button>
+        </form>
     </div>
 </ng-template>
 

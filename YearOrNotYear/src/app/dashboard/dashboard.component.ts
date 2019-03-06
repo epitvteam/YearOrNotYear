@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {UserService} from '../user.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,11 +14,21 @@ export class DashboardComponent implements OnInit {
   closeResult: string;
   public items;
   public itemsHave;
+  quote = 'Loading quote';
+  email = 'Loading email';
 
-  constructor(private http: HttpClient, private modalService: NgbModal) {
+  constructor(private http: HttpClient, private modalService: NgbModal, private user: UserService, private router: Router) {
   }
 
   ngOnInit(): void {
+    this.user.getData().subscribe(data => {
+      if(data.status) {
+        this.quote = data.quote;
+        this.email = data.email;
+      } else {
+        this.router.navigate(['home']);
+      }
+    });
     this.http.get<any>('assets/json/module.json')
       .subscribe(data => {
         this.items = data;
