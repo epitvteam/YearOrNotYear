@@ -74,7 +74,7 @@
             </div>
             <div class="example-list" style="height: 93%">
                 <div class="example-list" style="margin: 20px 20px 20px 20px; border-bottom: 0">
-                    <input class="example-box" placeholder="Rechercher..."
+                    <input [(ngModel)]="term" class="example-box" placeholder="Rechercher..."
                            style="padding-left: 10px; width: 100%; background-color: white; color: #949494; height: 60px; border-bottom: 0 !important;"/>
                 </div>
                 <div style="margin: 0px 20px 0px 20px;">
@@ -85,7 +85,8 @@
                         [cdkDropListConnectedTo]="[todoList]"
                         class="example-list scrollbar scrollbar-primary"
                         (cdkDropListDropped)="drop($event)">
-                        <div class="example-box" *ngFor="let data of items" cdkDrag>{{data.name}}
+                        <div class="example-box" *ngFor="let data of items | filter:'name' : term" cdkDrag>
+                            {{data.name}}
                             <div style="float: right">
                                 {{data.cred}} Crédits
                             </div>
