@@ -13,12 +13,18 @@ import {Router} from '@angular/router';
 
 export class DashboardComponent implements OnInit {
   closeResult: string;
-  public items;
+  items: string;
   public itemsHave;
   quote = 'Loading quote';
   email = 'Loading email';
 
   constructor(private http: HttpClient, private modalService: NgbModal, private user: UserService, private router: Router) {
+    this.http.get<any>('assets/json/module.json')
+      .subscribe(data => {
+        this.items = data;
+        this.itemsHave = [];
+      });
+    console.log(this.items);
   }
 
   ngOnInit(): void {
@@ -30,11 +36,6 @@ export class DashboardComponent implements OnInit {
         this.router.navigate(['home']);
       }
     });
-    this.http.get<any>('assets/json/module.json')
-      .subscribe(data => {
-        this.items = data;
-        this.itemsHave = [];
-      });
   }
 
   drop(event: CdkDragDrop<string[]>) {
