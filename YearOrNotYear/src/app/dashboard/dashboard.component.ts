@@ -3,28 +3,40 @@ import {HttpClient, JsonpClientBackend} from '@angular/common/http';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {Observable} from "rxjs";
+import {UserService} from '../user.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
+
 export class DashboardComponent implements OnInit {
   public closeResult;
   public items;
   public itemsHave;
-  public cpy;
+  quote = 'Loading quote';
+  email = 'Loading email';
 
-  constructor(private http: HttpClient, private modalService: NgbModal) {
-  }
-
-  ngOnInit(): void {
+  constructor(private http: HttpClient, private modalService: NgbModal, private user: UserService, private router: Router) {
     this.http.get<any>('assets/json/module.json')
       .subscribe(data => {
         this.items = data;
         this.itemsHave = [];
       });
     this.getModulesSubscribed('');
+  }
+
+  ngOnInit(): void {
+    this.user.getData().subscribe(data => {
+      if(data.status) {
+        this.quote = data.quote;
+        this.email = data.email;
+      } else {
+        this.router.navigate(['home']);
+      }
+    });
   }
 
   drop(event: CdkDragDrop<string[]>) {
