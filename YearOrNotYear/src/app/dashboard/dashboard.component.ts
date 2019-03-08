@@ -19,7 +19,8 @@ export class DashboardComponent implements OnInit {
   quote = 'Loading quote';
   email = 'Loading email';
 
-  constructor(private http: HttpClient, private modalService: NgbModal, private user: UserService, private router: Router) {
+  constructor(private http: HttpClient, private modalService: NgbModal, private user: UserService,
+              private router: Router) {
     this.http.get<any>('assets/json/module.json')
       .subscribe(data => {
         this.items = data;
@@ -30,7 +31,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.user.getData().subscribe(data => {
-      if(data.status) {
+      if (data.status) {
         this.quote = data.quote;
         this.email = data.email;
       } else {
