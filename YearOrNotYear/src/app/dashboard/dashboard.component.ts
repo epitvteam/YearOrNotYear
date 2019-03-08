@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient, JsonpClientBackend} from '@angular/common/http';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import {Observable} from "rxjs";
+import {Observable} from 'rxjs';
 import {UserService} from '../user.service';
 import {Router} from '@angular/router';
 
@@ -99,5 +99,25 @@ export class DashboardComponent implements OnInit {
       }
     }
     console.log(returnArray);
+  }
+  
+  async getModulesNotSubscribed(autologin) {
+    let baseUrl = 'http://intra.epitech.eu/' + autologin + '/course/filter?format=json';
+    var returnArray = [];
+    var JsonInArray;
+    var descriptions;
+    var datas = await this.http.get<any>(baseUrl).toPromise();
+    if (!datas) {
+      console.log('tg');
+    }
+    for (let entry of datas) {
+      //REPLACE 2018 BY YEAR
+      if (entry.status == 'notregistered' && entry.scolaryear == 2018) {
+        descriptions = await this.getDescription(autologin, entry.code, entry.scolaryear, entry.codeinstance);
+        JsonInArray = {'name': entry.title, 'scolaryear': entry.scolaryear, 'description': descriptions.description, 'credits': entry.credits, 'status': entry.status};
+        returnArray.push(JsonInArray);
+      }
+    }
+    return(JSON.stringify(returnArray));
   }
 }
