@@ -5,6 +5,8 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {Observable} from "rxjs";
 import {UserService} from '../user.service';
 import {Router} from '@angular/router';
+import {Angular5Csv} from 'angular5-csv/dist/Angular5-csv';
+
 
 @Component({
   selector: 'app-root',
@@ -18,6 +20,8 @@ export class DashboardComponent implements OnInit {
   public itemsHave;
   quote = 'Loading quote';
   email = 'Loading email';
+  public calcul = 0;
+
 
   constructor(private http: HttpClient, private modalService: NgbModal, private user: UserService, private router: Router) {
     this.http.get<any>('assets/json/module.json')
@@ -25,7 +29,7 @@ export class DashboardComponent implements OnInit {
         this.items = data;
         this.itemsHave = [];
       });
-    this.getModulesSubscribed('');
+    this.getModulesSubscribed('auth-3bdb67e70963ade059fd0ace20fc3cfa784f89e4');
   }
 
   ngOnInit(): void {
@@ -47,6 +51,7 @@ export class DashboardComponent implements OnInit {
         event.container.data,
         event.previousIndex,
         event.currentIndex);
+      this.get_credit();
     }
   }
 
@@ -65,6 +70,50 @@ export class DashboardComponent implements OnInit {
       return 'by clicking on a backdrop';
     } else {
       return `with: ${reason}`;
+    }
+  }
+
+
+  get_csv() {
+    var data = [
+      {
+        name: "Constant LOUBIER",
+        age: 19,
+        Credit: 80,
+        description: "I am London"
+      },
+      {
+        name: "Pierre HERMAN",
+        age: 19,
+        Credit: 80,
+        description: "I am Dublin"
+      },
+      {
+        name: "Hugo CASTELLI",
+        age: 19,
+        Credit: 80,
+        description: "I am Paris"
+      },
+    ];
+
+    var options = {
+      fieldSeparator: ',',
+      quoteStrings: '"',
+      decimalseparator: '.',
+      showLabels: true,
+      showTitle: true,
+      useBom: true,
+      noDownload: false,
+      headers: ["Name", "Age", "Credit", "Description"]
+    };
+
+    new Angular5Csv(data, 'MyFileName', options);
+  }
+
+  get_credit() {
+    this.calcul = 0;
+    for (let loop of this.itemsHave) {
+      this.calcul += loop.cred;
     }
   }
 

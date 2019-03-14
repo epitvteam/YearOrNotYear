@@ -1,26 +1,19 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <ng-template #content let-modal>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+        <h4 class="modal-title" id="modal-basic-title">Description</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="modal-body">
         <form>
-            <div class="form-group">
-                <label for="dateOfBirth">Date of birth</label>
-                <div class="input-group">
-                    <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
-                           #dp="ngbDatepicker">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
-                    </div>
-                </div>
+            <div class="description">
             </div>
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
     </div>
 </ng-template>
 
@@ -59,9 +52,12 @@
                         Total crédit:
                     </div>
                     <div style="float: right; margin: 20px">
-                        60
+                        {{calcul}}
                     </div>
                 </div>
+            </div>
+            <div style="float: left; margin: 20px;">
+                <input type="button" (click)="get_csv()" value="Download CSV">
             </div>
         </div>
 
