@@ -86,4 +86,13 @@ app.get('/api/data', async (req, res) => {
     })
 });
 
+app.get('/api/logout', (req, res) => {
+    req.session.destroy();
+    console.log('Deco');
+
+    res.json({
+        success: true
+    });
+});
+
 app.listen(1234, () => console.log('Server listening at 1234'));
