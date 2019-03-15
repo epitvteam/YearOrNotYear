@@ -1,10 +1,13 @@
-<ng-template #content let-modal>
+<ng-template #login let-modal>
+
+  <!--
     <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Connection</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
+
     <div class="modal-body" style="display: block; margin : auto;">
         <form (submit)="loginUser($event)">
             <input type="text" placeholder="Username" id="username"/>
@@ -18,6 +21,52 @@
             <button style="background-color: #46CEFC; color: white; padding: 10px; margin-top: 20px; margin-bottom: 20px" type="submit" value="submit" class="btn btn-primary btn-round d-block"><i style="color: white" class="ion ion-ios-power"></i>&nbsp;&nbsp;Se connecter</button>
         </form>
     </div>
+-->
+
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Connection</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form class="formlog"(submit)="loginUser($event)">
+      <h1>Bienvenue</h1>
+      <p>Remplis les entrées pour te connecter</p>
+      <input class="raw inputlog" type="text" placeholder="Adresse e-mail" id="username"/>
+      <input class="raw inputlog" type="password" placeholder="Mot de passe" id="password"/>
+      <br>
+      <button class="raw btnlog" style="" type="submit" value="submit">Se connecter</button>
+    </form>
+    <div>Pas de compte ?
+      <div (click)="open(signin)">
+        S'inscrire ici
+      </div>
+    </div>
+  </div>
+
+</ng-template>
+
+<ng-template #signin let-modal>
+
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Inscription</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form class="formlog" (submit)="RegisterUser($event)">
+      <input class="inputlog" type="text" placeholder="Username" id="Rusername"/>
+      <input class="inputlog" type="password" placeholder="Password" id="Rpassword"/>
+      <input class="inputlog" type="password" placeholder="Password" id="Rcpassword"/>
+      <br>
+      <button class="btnlog" type="submit" value="submit">S'inscrire</button>
+    </form>
+  </div>
+
 </ng-template>
 
 <div class="container-fluid">
@@ -26,7 +75,7 @@
         <br>
         <div style="font-size: 0.7vw;">An Epitech Project for Epitech Students</div>
     </div>
-    <div (click)="open(content)" class="title" style="float: right; display: inline-block; text-align: right; color: #46CEFC; margin-top: 40px; margin-right: 10%; cursor: pointer">
+    <div (click)="open(login)" class="title" style="float: right; display: inline-block; text-align: right; color: #46CEFC; margin-top: 40px; margin-right: 10%; cursor: pointer">
         Sign In
     </div>
     <div class="row" style="margin-top: 100px;">
@@ -34,7 +83,7 @@
             <div style="font-size: 40px; font-weight: bold">Organize your academic year <br>
                 with our revolutionary app<br></div>
             <div style="font-size: 20px">Select only what matters to you !</div><br>
-            <button (click)="open(content)" style="background-color: #46CEFC; color: white" type="button"class="btn btn-primary btn-round d-block">GET STARTED</button>
+            <button (click)="open(login)" style="background-color: #46CEFC; color: white" type="button"class="btn btn-primary btn-round d-block">GET STARTED</button>
         </div>
         <div style="text-align: center" class="col-lg-6 col-md-12">
             <img style="width: 90%" src="../../assets/images/planning.svg"/>
