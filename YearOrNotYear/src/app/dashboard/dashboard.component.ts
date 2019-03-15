@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit {
   quote = 'Loading quote';
   email = 'Loading email';
   public calcul = 0;
-
+  public cred = 0;
 
   constructor(private http: HttpClient, private modalService: NgbModal, private user: UserService,
               private router: Router) {
@@ -53,15 +53,18 @@ export class DashboardComponent implements OnInit {
         event.previousIndex,
         event.currentIndex);
       this.get_credit();
+      this.get_Descri();
     }
   }
 
-  open(content) {
+  open(content, data) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+    this.cred = data.cred;
+    //console.log(data.id);
   }
 
   private getDismissReason(reason: any): string {
@@ -74,6 +77,15 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  addmin_cred_counter(param) {
+    if (param == "+")
+      this.cred = this.cred + 1;
+    if (param == "-")
+      this.cred = this.cred - 1;
+  }
+
+  ret_cred_counter() {
+  }
 
   get_csv() {
     var data = [
@@ -116,6 +128,9 @@ export class DashboardComponent implements OnInit {
     for (let loop of this.itemsHave) {
       this.calcul += loop.cred;
     }
+  }
+
+  get_Descri() {
   }
 
   getInfos(autologin) {

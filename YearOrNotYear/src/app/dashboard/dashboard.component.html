@@ -2,8 +2,9 @@
 <ng-template #content let-modal>
     <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Description</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')" (click)="ret_cred_counter()">
             <span aria-hidden="true">&times;</span>
+
         </button>
     </div>
     <div class="modal-body">
@@ -13,7 +14,11 @@
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
+        <button type="button" (click)="addmin_cred_counter('+')">+</button>
+        {{cred}}
+        <button type="button" (click)="addmin_cred_counter('-')">-</button>
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')" (click)="ret_cred_counter()">Close</button>
+
     </div>
 </ng-template>
 
@@ -44,7 +49,7 @@
                         <div class="example-box" *ngFor="let data of itemsHave" cdkDrag>{{data.name}}
                             <div style="float: right">
                                 <i style="color: rgba(0, 0, 0, 0.87); margin-right: 20px; cursor: pointer"
-                                   (click)="open(content)" class="ion ion-ios-information-circle-outline"></i>
+                                   (click)="open(content, data)" class="ion ion-ios-information-circle-outline"></i>
                                 {{data.cred}} Crédits
                             </div>
                         </div>
