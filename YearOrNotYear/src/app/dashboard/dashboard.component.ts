@@ -29,14 +29,10 @@ export class DashboardComponent implements OnInit {
       .subscribe(data => {
         this.items = data;
         this.itemsHave = [];
-<<<<<<< HEAD
       });
-    this.getModulesSubscribed('auth-3bdb67e70963ade059fd0ace20fc3cfa784f89e4');
-=======
       });*/
-    this.getModulesSubscribed('auth-f6f274a14de80a2343e2c9b75186a460dbc236c5');
-    this.getModulesNotSubscribed('auth-f6f274a14de80a2343e2c9b75186a460dbc236c5');
->>>>>>> cfb1c2bed805545540a6aa43cfedf451dac65651
+    this.getModulesSubscribed('Token');
+    this.getModulesNotSubscribed('Token');
   }
 
   ngOnInit(): void {
@@ -69,8 +65,7 @@ export class DashboardComponent implements OnInit {
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
-    this.cred = data.cred;
-    //console.log(data.id);
+    this.cred = data.credits;
   }
 
   private getDismissReason(reason: any): string {
@@ -85,9 +80,10 @@ export class DashboardComponent implements OnInit {
 
   addmin_cred_counter(param) {
     if (param == "+")
-      this.cred = this.cred + 1;
+      this.cred++;
     if (param == "-")
-      this.cred = this.cred - 1;
+      if (this.cred >= 0)
+        this.cred--;
   }
 
   ret_cred_counter() {

@@ -14,9 +14,9 @@
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" (click)="addmin_cred_counter('+')">+</button>
-        {{cred}}
         <button type="button" (click)="addmin_cred_counter('-')">-</button>
+        {{cred}}
+        <button type="button" (click)="addmin_cred_counter('+')">+</button>
         <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')" (click)="ret_cred_counter()">Close</button>
 
     </div>
@@ -49,7 +49,7 @@
             <div class="row moduleBox" *ngFor="let data of itemsHave" cdkDrag>
               <div class="col-md-7 moduleName">{{data.name}}</div>
               <div class="col-md-2" style="padding: 0">
-                <div (click)="open(content)" style="position: absolute; bottom: 0; right: 10px">Détails</div>
+                <div (click)="open(content, data)" style="position: absolute; bottom: 0; right: 10px">Détails</div>
               </div>
               <div class="col-md-3 moduleName creditsNumber" style="float: right">{{data.credits}} Crédits</div>
             </div>
