@@ -8,3 +8,8 @@ html, body {
 .linear {
   background: linear-gradient(#3A3985, #3499FF);
 }
+
+app-root {
+  display: block;
+  height: 100%;
+}

@@ -24,13 +24,69 @@
     </div>
 </ng-template>
 
-<nav id="navbar">
-    <span>Year Or Not Year</span>
-    <button routerLink="/logout">Logout</button>
-    <div class="name" style="padding-left: 14px; padding-top: 13px">HC</div>
+
+<nav class="row" style="margin: 0 !important;">
+  <div class="offset-1 col-md-3">
+    <span class="spanTitle">YearOrNotYear</span><br>
+    <span class="spanSubtitle">An Epitech Project for Epitech Students</span>
+  </div>
+  <!--<button routerLink="/logout">Logout</button>-->
 </nav>
 
-<div class="container-fluid" style="margin-top: 80px; height: 100%;">
+
+<div class="container-fluid" style="height: 100%; background-color: #F3F3F3">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="moduleBlock">
+        <div class="row" style="height: 60px;">
+          <span class="col-md-8 spanTitle moduleBlockTitle" style="font-family: 'Roboto', sans-serif">Vos Modules:</span>
+        </div>
+        <div class="row" style="height: 500px">
+          <div class="moduleList scrollbar scrollbar-primary"
+               cdkDropList
+               #todoList="cdkDropList"
+               [cdkDropListData]="itemsHave"
+               [cdkDropListConnectedTo]="[doneList]"
+               (cdkDropListDropped)="drop($event)">
+            <div class="row moduleBox" *ngFor="let data of itemsHave" cdkDrag>
+              <div class="col-md-7 moduleName">{{data.name}}</div>
+              <div class="col-md-2" style="padding: 0">
+                <div (click)="open(content)" style="position: absolute; bottom: 0; right: 10px">Détails</div>
+              </div>
+              <div class="col-md-3 moduleName creditsNumber" style="float: right">{{data.credits}} Crédits</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="moduleBlock">
+        <div class="row" style="height: 60px;">
+          <span class="col-md-7 spanTitle moduleBlockTitle" style="font-family: 'Roboto', sans-serif">Modules Disponibles:</span>
+          <div class="col-md-4"><button class="addModuleButton">Ajouter un Module</button></div>
+        </div>
+        <div class="row" style="height: 500px;">
+          <div class="moduleList scrollbar scrollbar-primary"
+               cdkDropList
+               #doneList="cdkDropList"
+               [cdkDropListData]="items"
+               [cdkDropListConnectedTo]="[todoList]"
+               (cdkDropListDropped)="drop($event)">
+            <div class="row moduleBox" *ngFor="let data of items | filter:'name' : term" cdkDrag>
+              <div class="col-md-7 moduleName">{{data.name}}</div>
+              <div class="col-md-2" style="padding: 0">
+                <div (click)="open(content)" style="position: absolute; bottom: 0; right: 10px">Détails</div>
+              </div>
+              <div class="col-md-3 moduleName creditsNumber" style="float: right">{{data.credits}} Crédits</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--<div class="container-fluid" style="margin-top: 160px; height: 50%;">
     <div class="row">
         <div class="col-lg-6 col-md-6" style="width: 100%">
             <div class="example-list"
@@ -41,20 +97,21 @@
             </div>
             <div class="example-list" style="height: 93%">
                 <div style="margin: 20px 20px 0px 20px;">
-                    <div style="height: 715px"
+                    <div style="height: 550px"
                         cdkDropList
                         #todoList="cdkDropList"
                         [cdkDropListData]="itemsHave"
                         [cdkDropListConnectedTo]="[doneList]"
                         class="example-list scrollbar scrollbar-primary"
                         (cdkDropListDropped)="drop($event)">
-                        <div class="example-box" *ngFor="let data of itemsHave" cdkDrag>{{data.name}}
-                            <div style="float: right">
-                                <i style="color: rgba(0, 0, 0, 0.87); margin-right: 20px; cursor: pointer"
-                                   (click)="open(content)" class="ion ion-ios-information-circle-outline"></i>
-                                {{data.cred}} Crédits
-                            </div>
-                        </div>
+                          <div class="example-box" *ngFor="let data of itemsHave" cdkDrag>
+                            {{data.name}}
+                              <div style="float: right">
+                                  <i style="color: rgba(0, 0, 0, 0.87); margin-right: 20px; cursor: pointer"
+                                     (click)="open(content)" class="ion ion-ios-information-circle-outline"></i>
+                                  {{data.cred}} Crédits
+                              </div>
+                          </div>
                     </div>
                     <div style="float: left; margin: 20px">
                         Total crédit:
@@ -79,7 +136,7 @@
                            style="padding-left: 10px; width: 100%; background-color: white; color: #949494; height: 60px; border-bottom: 0 !important;"/>
                 </div>
                 <div style="margin: 0px 20px 0px 20px;">
-                    <div style="height: 633px"
+                    <div style="height: 467px"
                         cdkDropList
                         #doneList="cdkDropList"
                         [cdkDropListData]="items"
@@ -101,4 +158,4 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
