@@ -1,35 +1,9 @@
 <ng-template #login let-modal>
-
-  <!--
-    <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Connection</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-
-    <div class="modal-body" style="display: block; margin : auto;">
-        <form (submit)="loginUser($event)">
-            <input type="text" placeholder="Username" id="username"/>
-            <input type="password" placeholder="Password" id="password"/>
-            <button style="background-color: #46CEFC; color: white; padding: 10px; margin-top: 20px; margin-bottom: 20px" type="submit" value="submit" class="btn btn-primary btn-round d-block"><i style="color: white" class="ion ion-ios-power"></i>&nbsp;&nbsp;Se connecter</button>
-        </form>
-        <form (submit)="RegisterUser($event)">
-            <input type="text" placeholder="Username" id="Rusername"/>
-            <input type="password" placeholder="Password" id="Rpassword"/>
-            <input type="password" placeholder="Password" id="Rcpassword"/>
-            <button style="background-color: #46CEFC; color: white; padding: 10px; margin-top: 20px; margin-bottom: 20px" type="submit" value="submit" class="btn btn-primary btn-round d-block"><i style="color: white" class="ion ion-ios-power"></i>&nbsp;&nbsp;Se connecter</button>
-        </form>
-    </div>
--->
-
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Connection</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+  <div class="modal-header" style="border-bottom: none">
+    <button type="button" class="close" style="outline: none" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-
   <div class="modal-body">
     <form class="formlog"(submit)="loginUser($event)">
       <h1>Bienvenue</h1>
@@ -39,34 +13,35 @@
       <br>
       <button class="raw btnlog" style="" type="submit" value="submit">Se connecter</button>
     </form>
-    <div>Pas de compte ?
-      <div (click)="open(signin)">
-        S'inscrire ici
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3" style="display: inline; display: -webkit-box"> Pas de compte ?
+          <div class="col-md" (click)="open(signin); modal.dismiss('Cross click')"
+               style="cursor: pointer; color: #3499FF"> S'inscrire ici
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
 </ng-template>
 
 <ng-template #signin let-modal>
-
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Inscription</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+  <div class="modal-header" style="border-bottom: none">
+    <button type="button" class="close" style="outline: none" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-
   <div class="modal-body">
     <form class="formlog" (submit)="RegisterUser($event)">
-      <input class="inputlog" type="text" placeholder="Username" id="Rusername"/>
-      <input class="inputlog" type="password" placeholder="Password" id="Rpassword"/>
-      <input class="inputlog" type="password" placeholder="Password" id="Rcpassword"/>
+      <h1>Inscription</h1>
+      <p>Remplis le formulaire d'inscription</p>
+      <input class="inputlog" type="text" placeholder="Nom d'utilisateur" id="Rusername"/>
+      <input class="inputlog" type="password" placeholder="Mot de passe" id="Rpassword"/>
+      <input class="inputlog" type="password" placeholder="Retaper votre mot de passe" id="Rcpassword"/>
       <br>
       <button class="btnlog" type="submit" value="submit">S'inscrire</button>
     </form>
   </div>
-
 </ng-template>
 
 <div class="container-fluid">
@@ -75,7 +50,7 @@
         <br>
         <div style="font-size: 0.7vw;">An Epitech Project for Epitech Students</div>
     </div>
-    <div (click)="open(login)" class="title" style="float: right; display: inline-block; text-align: right; color: #46CEFC; margin-top: 40px; margin-right: 10%; cursor: pointer">
+    <div (click)="open(login)" style="border-bottom: none" class="title" style="float: right; display: inline-block; text-align: right; color: #46CEFC; margin-top: 40px; margin-right: 10%; cursor: pointer">
         Sign In
     </div>
     <div class="row" style="margin-top: 100px;">

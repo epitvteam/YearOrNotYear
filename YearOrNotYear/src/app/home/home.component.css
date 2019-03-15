@@ -31,15 +31,21 @@
   width: 70%;
   margin-top: 30px;
   text-align: left;
+  font-size: 20px;
+}
+
+.inputlog:hover {
+  border-bottom: 1px solid #000000;
 }
 
 .inputlog:focus {
   border-bottom: 1px solid #000000;
+  outline: none;
 }
 
 .btnlog {
   background-color: #3499FF;
-  border: 1px;
+  border: 100px;
   border-radius: 4px;
   color: white;
   padding: 16px 32px;
@@ -47,4 +53,9 @@
   margin: 40px 2px;
   display: initial;
   cursor: pointer;
+}
+
+.btnlog {
+  border: 2px;
+  outline: none;
 }
