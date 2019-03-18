@@ -5,6 +5,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Development server
 
 ```bash
+$ sudo sysctl fs.inotify.max_user_watches=524288 && sudo sysctl -p --system
+$
 $ sudo mongod // Start Database
 $ cd ServerYONY
 $ node index.js // Start API

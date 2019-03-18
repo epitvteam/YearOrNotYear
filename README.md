@@ -10,6 +10,7 @@ WEB application for calculating epitech credits and épices to validate the year
 * [API Outlook](https://developer.microsoft.com/en-us/outlook) - api for connection
 
 ## Installation
+
 Dillinger requires Angular 7 to run.
 
 Install the dependencies and devDependencies and start the server.

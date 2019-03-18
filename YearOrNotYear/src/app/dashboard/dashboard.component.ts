@@ -4,6 +4,7 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {UserService} from '../user.service';
 import {Router} from '@angular/router';
+import {AuthService} from '../auth.service';
 
 @Component({
   selector: 'app-root',
@@ -15,11 +16,13 @@ export class DashboardComponent implements OnInit {
   closeResult: string;
   items: string;
   public itemsHave;
-  quote = 'Loading quote';
   email = 'Loading email';
+  firstName = 'Loading firstName';
+  lastName = 'Loading lastName';
+  year = 'Loading year';
 
   constructor(private http: HttpClient, private modalService: NgbModal, private user: UserService,
-              private router: Router) {
+              private router: Router, private auth: AuthService) {
     this.http.get<any>('assets/json/module.json')
       .subscribe(data => {
         this.items = data;
@@ -28,11 +31,31 @@ export class DashboardComponent implements OnInit {
     console.log(this.items);
   }
 
+  createModule(event) {
+    event.preventDefault();
+    const target = event.target;
+    const errors = [];
+    const nameModule = target.querySelector('#nameModule').value;
+    const cred = target.querySelector('#cred').value;
+
+    if (errors.length === 0) {
+      this.auth.postModule(nameModule, cred).subscribe(data => {
+        console.log(data);
+        if (data.success) {
+          console.log('Module set in DB');
+        }
+      });
+    }
+    console.log(nameModule, cred);
+  }
+
   ngOnInit(): void {
     this.user.getData().subscribe(data => {
       if (data.status) {
-        this.quote = data.quote;
         this.email = data.email;
+        this.firstName = data.firstName;
+        this.lastName = data.lastName;
+        this.year = data.year;
       } else {
         this.router.navigate(['home']);
       }

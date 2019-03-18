@@ -6,16 +6,19 @@
         </button>
     </div>
     <div class="modal-body" style="display: block; margin : auto;">
-        <form (submit)="loginUser($event)">
+        <form (submit)="loginUser($event); modal.dismiss('Cross click')">
             <input type="text" placeholder="Username" id="username"/>
             <input type="password" placeholder="Password" id="password"/>
             <button style="background-color: #46CEFC; color: white; padding: 10px; margin-top: 20px; margin-bottom: 20px" type="submit" value="submit" class="btn btn-primary btn-round d-block"><i style="color: white" class="ion ion-ios-power"></i>&nbsp;&nbsp;Se connecter</button>
         </form>
-        <form (submit)="RegisterUser($event)">
-            <input type="text" placeholder="Username" id="Rusername"/>
-            <input type="password" placeholder="Password" id="Rpassword"/>
-            <input type="password" placeholder="Password" id="Rcpassword"/>
-            <button style="background-color: #46CEFC; color: white; padding: 10px; margin-top: 20px; margin-bottom: 20px" type="submit" value="submit" class="btn btn-primary btn-round d-block"><i style="color: white" class="ion ion-ios-power"></i>&nbsp;&nbsp;Se connecter</button>
+        <form (submit)="RegisterUser($event); modal.dismiss('Cross click')">
+            <input type="email" placeholder="Email" id="Remail" required/>
+            <input type="password" placeholder="Password" id="Rpassword" required/>
+            <input type="password" placeholder="Retape Password" id="Rcpassword" required/>
+            <input type="text" placeholder="First Name" id="RfirstName" required/>
+            <input type="text" placeholder="Last name" id="RlastName" required/>
+            <input type="number" placeholder="Year" id="Ryear" required/>
+            <button style="background-color: #46CEFC; color: white; padding: 10px; margin-top: 20px; margin-bottom: 20px" type="submit" value="submit" class="btn btn-primary btn-round d-block"><i style="color: white" class="ion ion-ios-power"></i>&nbsp;&nbsp;Créer son compte</button>
         </form>
     </div>
 </ng-template>
