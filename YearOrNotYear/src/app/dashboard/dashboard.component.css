@@ -1,10 +1,9 @@
-.example-list {
-  border: solid 1px #ccc !important;
-  min-height: 60px;
-  background: white;
-  border-radius: 4px;
-  overflow: hidden;
-  display: block;
+@font-face {
+  font-family: "OCRAExtendedRegular";
+  src: url("./font/OCRAEXT.ttf") format("truetype"),
+  url("./font/OCRAEXT.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
 .example-box {
@@ -59,13 +58,13 @@
 }
 
 .scrollbar-primary::-webkit-scrollbar {
-  width: 12px;
+  width: 3px;
   background-color: #F5F5F5; }
 
 .scrollbar-primary::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-  background-color: #4285F4; }
+  border-radius: 20px;
+  -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1);
+  background-color: #3A3985; }
 
 .scrollbar-danger::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
@@ -155,42 +154,98 @@ nav {
   position: fixed;
   top: 0;
   left: 0;
-  height: 60px;
+  height: 100px;
   width: 100%;
-  color: white;
-  background-color: #2962FF;
+  color: #3A3985;
+  background-color: white;
   box-sizing: border-box;
   padding: 12px 18px;
-  box-shadow: 0px 4px 7px #777;
   transition: background-color 0.4s ease-out;
+  z-index: 2;
+  box-shadow: 0px 3px 6px #e0e0eb;
 }
 
-nav span {
-  font-weight: 600;
-  letter-spacing: .085em;
-  line-height: 40px;
+.spanTitle {
+  padding-top: 10px;
+  font-size: 30px;
+  letter-spacing: normal;
+  font-family: OCRAExtendedRegular, sans-serif;
 }
 
-nav div {
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin-top: 5px;
+.spanSubtitle {
+  font-size: 10px;
+  letter-spacing: normal;
+  font-family: OCRAExtendedRegular, sans-serif;
+}
+
+.moduleBlock {
+  height: 600px;
+  margin-top: 150px;
+  border-radius: 8px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  overflow: hidden;
+  background-color: white;
+}
+
+.moduleList {
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+  max-height: 500px;
+}
+
+.moduleBox {
+  background-color: white;
+  margin-left: auto;
+  margin-right: auto;
+  width: 98%;
   height: 50px;
-  width: 50px;
+  border-radius: 8px;
+  border: 2px solid #3A3985;
+  margin-bottom: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+}
+
+.moduleBlockTitle {
+  padding: 0;
+  font-size: 20px;
+  margin-left: 5%;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.moduleName {
+  margin-top: auto;
+  margin-bottom: auto;
+  height: 100%;
+  font-size: 20px;
+  line-height: 46px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.creditsNumber {
   color: white;
+  background-color: #3A3985;
+  text-align: center;
 }
 
-nav .name {
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin-top: 5px;
-  height: 50px;
-  width: 50px;
-  background-color: #eee;
-  color: #2962FF;
-  border-radius: 50%;
-  margin-right: 18px;
-  text-transform: uppercase;
+.addModuleButton {
+  float: right;
+  margin-top: 10px;
+  width: 80%;
+  height: 70%;
+  text-align: right;
+  padding-right: 14px;
+  font-size: 15px;
+  color: white;
+  border-radius: 50px;
+  border: 0;
+  background-image: linear-gradient(-106deg, #F0712A, #FCCB4A);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+}
+
+.gradientBar {
+  height: 100px;
+  background-color: red;
 }

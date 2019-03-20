@@ -1,26 +1,23 @@
 <ng-template #content let-modal>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <h4 class="modal-title" id="modal-basic-title">Description</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')" (click)="ret_cred_counter()">
             <span aria-hidden="true">&times;</span>
+
         </button>
     </div>
     <div class="modal-body">
         <form>
-            <div class="form-group">
-                <label for="dateOfBirth">Date of birth</label>
-                <div class="input-group">
-                    <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
-                           #dp="ngbDatepicker">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
-                    </div>
-                </div>
+            <div class="description">
             </div>
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+        <button type="button" (click)="addmin_cred_counter('-')">-</button>
+        {{cred}}
+        <button type="button" (click)="addmin_cred_counter('+')">+</button>
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')" (click)="ret_cred_counter()">Close</button>
+
     </div>
 </ng-template>
 
@@ -34,7 +31,6 @@
     <div class="modal-body">
         <form>
             <div class="form-group">
-                <label for="dateOfBirth">Date of birth</label>
                 <div class="input-group">
                     <form (submit)="createModule($event); modal.dismiss('Cross click')">
                         <input id="nameModule" placeholder="Module" type="text"/>
@@ -50,14 +46,71 @@
     </div>
 </ng-template>
 
-<nav id="navbar">
-    <span>Year Or Not Year</span>
-    <button routerLink="/logout">Logout</button>
+<nav class="row" style="margin: 0 !important;">
+  <div class="offset-1 col-md-3">
+    <span class="spanTitle">YearOrNotYear</span><br>
+    <span class="spanSubtitle">An Epitech Project for Epitech Students</span>
+  </div>
     <span>{{firstName}} & {{lastName}} & {{year}}</span>
-    <div class="name" style="padding-left: 14px; padding-top: 13px">HC</div>
 </nav>
 
-<div class="container-fluid" style="margin-top: 80px; height: 100%;">
+
+<div class="container-fluid" style="height: 100%; background-color: #F3F3F3">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="moduleBlock">
+        <div class="row" style="height: 60px;">
+          <span class="col-md-8 spanTitle moduleBlockTitle" style="font-family: 'Roboto', sans-serif">Vos Modules:</span>
+        </div>
+        <div class="row" style="height: 500px">
+          <div class="moduleList scrollbar scrollbar-primary"
+               cdkDropList
+               #todoList="cdkDropList"
+               [cdkDropListData]="itemsHave"
+               [cdkDropListConnectedTo]="[doneList]"
+               (cdkDropListDropped)="drop($event)">
+            <div class="row moduleBox" *ngFor="let data of itemsHave" cdkDrag>
+              <div class="col-md-7 moduleName">{{data.name}}</div>
+              <div class="col-md-2" style="padding: 0">
+                <div (click)="open(content, data)" style="position: absolute; bottom: 0; right: 10px">Détails</div>
+              </div>
+              <div class="col-md-3 moduleName creditsNumber" style="float: right">{{data.credits}} Crédits</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="moduleBlock">
+        <div class="row" style="height: 60px;">
+          <span class="col-md-7 spanTitle moduleBlockTitle" style="font-family: 'Roboto', sans-serif">Modules Disponibles:</span>
+          <div class="col-md-4"><button class="addModuleButton">Ajouter un Module</button></div>
+        </div>
+        <div class="row" style="height: 500px;">
+          <div class="moduleList scrollbar scrollbar-primary"
+               cdkDropList
+               #doneList="cdkDropList"
+               [cdkDropListData]="items"
+               [cdkDropListConnectedTo]="[todoList]"
+               (cdkDropListDropped)="drop($event)">
+            <div class="row moduleBox" *ngFor="let data of items | filter:'name' : term" cdkDrag>
+              <div class="col-md-7 moduleName">{{data.name}}</div>
+              <div class="col-md-2" style="padding: 0">
+                <div (click)="open(content)" style="position: absolute; bottom: 0; right: 10px">Détails</div>
+              </div>
+              <div class="col-md-3 moduleName creditsNumber" style="float: right">{{data.credits}} Crédits</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="float: left; margin: 20px;">
+        <input type="button" (click)="get_csv()" value="Download CSV">
+    </div>
+  </div>
+</div>
+
+<!--<div class="container-fluid" style="margin-top: 160px; height: 50%;">
     <div class="row">
         <div class="col-lg-6 col-md-6" style="width: 100%">
             <div class="example-list"
@@ -68,7 +121,7 @@
             </div>
             <div class="example-list" style="height: 93%">
                 <div style="margin: 20px 20px 0px 20px;">
-                    <div style="height: 715px"
+                    <div style="height: 550px"
                         cdkDropList
                         #todoList="cdkDropList"
                         [cdkDropListData]="itemsHave"
@@ -78,18 +131,29 @@
                         <div class="example-box" *ngFor="let data of itemsHave" cdkDrag>{{data.name}}
                             <div style="float: right">
                                 <i style="color: rgba(0, 0, 0, 0.87); margin-right: 20px; cursor: pointer"
-                                   (click)="open(content)" class="ion ion-ios-information-circle-outline"></i>
+                                   (click)="open(content, data)" class="ion ion-ios-information-circle-outline"></i>
                                 {{data.cred}} Crédits
                             </div>
                         </div>
+                          <div class="example-box" *ngFor="let data of itemsHave" cdkDrag>
+                            {{data.name}}
+                              <div style="float: right">
+                                  <i style="color: rgba(0, 0, 0, 0.87); margin-right: 20px; cursor: pointer"
+                                     (click)="open(content)" class="ion ion-ios-information-circle-outline"></i>
+                                  {{data.cred}} Crédits
+                              </div>
+                          </div>
                     </div>
                     <div style="float: left; margin: 20px">
                         Total crédit:
                     </div>
                     <div style="float: right; margin: 20px">
-                        60
+                        {{calcul}}
                     </div>
                 </div>
+            </div>
+            <div style="float: left; margin: 20px;">
+                <input type="button" (click)="get_csv()" value="Download CSV">
             </div>
         </div>
 
@@ -106,7 +170,7 @@
                            style="padding-left: 10px; width: 100%; background-color: white; color: #949494; height: 60px; border-bottom: 0 !important;"/>
                 </div>
                 <div style="margin: 0px 20px 0px 20px;">
-                    <div style="height: 633px"
+                    <div style="height: 467px"
                         cdkDropList
                         #doneList="cdkDropList"
                         [cdkDropListData]="items"
@@ -132,3 +196,4 @@
     <a>© 2019 YearOrNotYear, All Rights Reserved</a>
     </div>
 </div>
+</div>-->
