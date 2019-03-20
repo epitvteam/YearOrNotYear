@@ -27,8 +27,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(private http: HttpClient, private modalService: NgbModal, private user: UserService,
               private router: Router, private auth: AuthService) {
-    this.getModulesSubscribed('Token');
-    this.getModulesNotSubscribed('Token');
+    this.getModulesSubscribed('auth-b7f9b2f6c0ced60d38430f4ecdc600fc9d9c733f');
+    this.getModulesNotSubscribed('auth-b7f9b2f6c0ced60d38430f4ecdc600fc9d9c733f');
   }
 
   createModule(event) {
