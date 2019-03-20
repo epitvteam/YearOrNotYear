@@ -22,6 +22,7 @@ export class DashboardComponent implements OnInit {
   email = 'Loading email';
   public calcul = 0;
   public cred = 0;
+  public description = "NULL";
 
   constructor(private http: HttpClient, private modalService: NgbModal, private user: UserService,
               private router: Router) {
@@ -31,8 +32,8 @@ export class DashboardComponent implements OnInit {
         this.itemsHave = [];
       });
       });*/
-    this.getModulesSubscribed('Token');
-    this.getModulesNotSubscribed('Token');
+    this.getModulesSubscribed('auth-3bdb67e70963ade059fd0ace20fc3cfa784f89e4');
+    this.getModulesNotSubscribed('auth-3bdb67e70963ade059fd0ace20fc3cfa784f89e4');
   }
 
   ngOnInit(): void {
@@ -60,12 +61,13 @@ export class DashboardComponent implements OnInit {
   }
 
   open(content, data) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size: 'lg'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
     this.cred = data.credits;
+    this.description = data.description;
   }
 
   private getDismissReason(reason: any): string {
@@ -82,11 +84,12 @@ export class DashboardComponent implements OnInit {
     if (param == "+")
       this.cred++;
     if (param == "-")
-      if (this.cred >= 0)
+      if (this.cred > 0)
         this.cred--;
   }
 
   ret_cred_counter() {
+    console.log(this.cred);
   }
 
   get_csv() {
@@ -128,7 +131,7 @@ export class DashboardComponent implements OnInit {
   get_credit() {
     this.calcul = 0;
     for (let loop of this.itemsHave) {
-      this.calcul += loop.cred;
+      this.calcul = this.calcul + Number(loop.credits);
     }
   }
 
@@ -167,6 +170,7 @@ export class DashboardComponent implements OnInit {
     }
     console.log(returnArray);
     this.itemsHave = returnArray;
+    this.get_credit();
     return(returnArray);
   }
 

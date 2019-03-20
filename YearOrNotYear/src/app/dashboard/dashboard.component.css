@@ -249,3 +249,28 @@ nav {
   height: 100px;
   background-color: red;
 }
+
+.button-csv {
+	padding:16px 0px 16px 0px;
+	font:bold 16px OCRAExtendedRegular;
+	color:#F5F5F5;
+	border-radius:16px;
+	width:150px;
+  background:#3A3985;
+  border: 0;
+}
+
+.plus-min-button {
+  width:35px;
+	height:35px;
+  background-color: rgba(0, 0, 255, 0);
+	font:bold 20px OCRAExtendedRegular;
+	border-radius:50%;
+  border:none;
+  outline:none;
+	color:#3A3985;
+}
+
+.modal-basic-title {
+  max-width: 1200px;
+}
