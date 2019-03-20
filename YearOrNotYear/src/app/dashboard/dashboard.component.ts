@@ -39,7 +39,7 @@ export class DashboardComponent implements OnInit {
     const cred = target.querySelector('#cred').value;
 
     if (errors.length === 0) {
-      this.auth.postModule(nameModule, cred).subscribe(data => {
+      this.auth.createModule(nameModule, cred).subscribe(data => {
         console.log(data);
         if (data.success) {
           console.log('Module set in DB');

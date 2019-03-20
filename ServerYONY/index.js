@@ -103,7 +103,6 @@ app.get('/api/logout', (req, res) => {
 });
 
 app.post('/api/moduleUpdate', async (req, res) => {
-
     const user = await User.findOne({email: req.session.user});
     if (!user) {
         res.json({
@@ -115,7 +114,7 @@ app.post('/api/moduleUpdate', async (req, res) => {
     await User.updateOne(
         {
             email: req.session.user,
-            "modulesAdd.moduleName": ""
+            "modulesAdd.moduleName": req.body.nameModule,
         },
         {
             $set: {
@@ -128,6 +127,41 @@ app.post('/api/moduleUpdate', async (req, res) => {
     res.json({
         success: true,
         message: 'Updated'
+    });
+});
+
+app.post('/api/moduleCreate', async (req, res) => {
+    const user = await User.findOne({email: req.session.user});
+    if (!user) {
+        res.json({
+            success: false,
+            message: 'invalid'
+        });
+        return
+    }
+    var ap = {
+        moduleName: req.body.nameModule,
+        cred: req.body.cred
+    };
+
+    await User.updateOne(
+        {
+            email: req.session.user
+        },
+        {
+            $push: {
+                'modulesAdd': ap
+            }
+        },
+        {
+            safe: true,
+            upsert: true,
+            new: true
+        });
+
+    res.json({
+        success: true,
+        message: 'Created'
     });
 });
 
