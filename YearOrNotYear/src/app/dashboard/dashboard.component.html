@@ -1,4 +1,3 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <ng-template #content let-modal>
     <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Description</h4>
@@ -25,13 +24,38 @@
     </div>
 </ng-template>
 
+<ng-template #content1 let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <div class="input-group">
+                    <form (submit)="createModule($event); modal.dismiss('Cross click')">
+                        <input id="nameModule" placeholder="Module" type="text"/>
+                        <input id="cred" placeholder="cred" type="number"/>
+                        <button style="background-color: #46CEFC; color: white; padding: 10px; margin-top: 20px; margin-bottom: 20px" type="submit" value="submit" class="btn btn-primary btn-round d-block"><i style="color: white" class="ion ion-ios-power"></i>&nbsp;&nbsp;Créer</button>
+                    </form>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    </div>
+</ng-template>
 
 <nav class="row" style="margin: 0 !important;">
   <div class="offset-1 col-md-3">
     <span class="spanTitle">YearOrNotYear</span><br>
     <span class="spanSubtitle">An Epitech Project for Epitech Students</span>
   </div>
-  <!--<button routerLink="/logout">Logout</button>-->
+    <span>{{firstName}} & {{lastName}} & {{year}}</span>
+    <button routerLink="/logout">Logout</button>
 </nav>
 
 
@@ -167,10 +191,14 @@
                     </div>
                     <div style="text-align: center; margin-top: 10px">
                         Un module n'est pas dans la liste ?<br>
-                        <i style="cursor: pointer;" class="ion ion-ios-add-circle-outline"></i>
+                        <i (click)="open(content1)" style="cursor: pointer;" class="ion ion-ios-add-circle-outline"></i>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div>
+    <a>© 2019 YearOrNotYear, All Rights Reserved</a>
+    </div>
+</div>
 </div>-->

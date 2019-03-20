@@ -5,8 +5,8 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {Observable} from 'rxjs';
 import {UserService} from '../user.service';
 import {Router} from '@angular/router';
+import {AuthService} from '../auth.service';
 import {Angular5Csv} from 'angular5-csv/dist/Angular5-csv';
-
 
 @Component({
   selector: 'app-root',
@@ -18,29 +18,47 @@ export class DashboardComponent implements OnInit {
   public closeResult;
   public items;
   public itemsHave;
-  quote = 'Loading quote';
-  email = 'Loading email';
   public calcul = 0;
   public cred = 0;
   public description = "NULL";
+  email = 'Loading email';
+  firstName = 'Loading firstName';
+  lastName = 'Loading lastName';
+  year = 'Loading year';
 
   constructor(private http: HttpClient, private modalService: NgbModal, private user: UserService,
-              private router: Router) {
-    /*this.http.get<any>('assets/json/module.json')
-      .subscribe(data => {
-        this.items = data;
-        this.itemsHave = [];
+              private router: Router, private auth: AuthService) {
+    this.getModulesSubscribed('auth-b7f9b2f6c0ced60d38430f4ecdc600fc9d9c733f');
+    this.getModulesNotSubscribed('auth-b7f9b2f6c0ced60d38430f4ecdc600fc9d9c733f');
+  }
+
+  createModule(event) {
+    event.preventDefault();
+    const target = event.target;
+    const errors = [];
+    const nameModule = target.querySelector('#nameModule').value;
+    const cred = target.querySelector('#cred').value;
+
+    if (errors.length === 0) {
+      this.auth.createModule(nameModule, cred).subscribe(data => {
+        console.log(data);
+        if (data.success) {
+          console.log('Module set in DB');
+        }
       });
-      });*/
     this.getModulesSubscribed('auth-3bdb67e70963ade059fd0ace20fc3cfa784f89e4');
     this.getModulesNotSubscribed('auth-3bdb67e70963ade059fd0ace20fc3cfa784f89e4');
+    }
+    console.log(nameModule, cred);
   }
 
   ngOnInit(): void {
     this.user.getData().subscribe(data => {
       if (data.status) {
-        this.quote = data.quote;
         this.email = data.email;
+        this.firstName = data.firstName;
+        this.lastName = data.lastName;
+        this.year = data.year;
       } else {
         this.router.navigate(['home']);
       }
@@ -151,7 +169,7 @@ export class DashboardComponent implements OnInit {
 
   async getDescription(autologin, modulecode, year, city) {
     const URLb = 'http://intra.epitech.eu/' + autologin + '/module/' + year + '/' + modulecode + '/' + city + '/?format=json';
-    return(await this.http.get(URLb).toPromise());
+    return (await this.http.get(URLb).toPromise());
   }
 
   async getModulesSubscribed(autologin) {
@@ -164,7 +182,13 @@ export class DashboardComponent implements OnInit {
       //REPLACE 2018 BY YEAR
       if ((entry.status == 'ongoing' || entry.status == 'valid' || entry.status == 'fail') && entry.scolaryear == 2018) {
         descriptions = await this.getDescription(autologin, entry.code, entry.scolaryear, entry.codeinstance);
-        JsonInArray = {'name': entry.title, 'scolaryear': entry.scolaryear, 'description': descriptions.description, 'credits': entry.credits, 'status': entry.status};
+        JsonInArray = {
+          'name': entry.title,
+          'scolaryear': entry.scolaryear,
+          'description': descriptions.description,
+          'credits': entry.credits,
+          'status': entry.status
+        };
         returnArray.push(JsonInArray);
       }
     }
@@ -187,13 +211,15 @@ export class DashboardComponent implements OnInit {
       //REPLACE 2018 BY YEAR
       if (entry.status == 'notregistered' && entry.scolaryear == 2018) {
         descriptions = await this.getDescription(autologin, entry.code, entry.scolaryear, entry.codeinstance);
-        JsonInArray = {'name': entry.title, 'scolaryear': entry.scolaryear, 'description': descriptions.description,
-          'credits': entry.credits, 'status': entry.status};
+        JsonInArray = {
+          'name': entry.title, 'scolaryear': entry.scolaryear, 'description': descriptions.description,
+          'credits': entry.credits, 'status': entry.status
+        };
         returnArray.push(JsonInArray);
       }
     }
     console.log(returnArray);
     this.items = returnArray;
-    return(returnArray);
+    return (returnArray);
   }
 }
