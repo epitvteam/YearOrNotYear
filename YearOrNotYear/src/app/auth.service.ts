@@ -11,6 +11,11 @@ interface registerResponse {
   message: string;
 }
 
+interface moduleResponse {
+  success: boolean,
+  message: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -35,10 +40,27 @@ export class AuthService {
     });
   }
 
-  registerUser(email, password) {
+  registerUser(email, password, firstName, lastName, year) {
     return this.http.post<registerResponse>('/api/register', {
       email,
-      password
+      password,
+      firstName,
+      lastName,
+      year
+    });
+  }
+
+  postModule(nameModule, cred) {
+    return this.http.post<moduleResponse>('/api/moduleUpdate', {
+      nameModule,
+      cred
+    });
+  }
+
+  createModule(nameModule, cred) {
+    return this.http.post<moduleResponse>('/api/moduleCreate', {
+      nameModule,
+      cred
     });
   }
 }

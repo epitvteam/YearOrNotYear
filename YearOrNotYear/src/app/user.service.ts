@@ -3,9 +3,11 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 
 interface myData {
-  email: string,
-  status: boolean,
-  quote: string;
+  email: string;
+  status: boolean;
+  firstName: string;
+  lastName: string;
+  year: string;
 }
 
 interface isLoggedIn {
@@ -33,5 +35,4 @@ export class UserService {
   logout() {
     return this.http.get<logoutStatus>('/api/logout');
   }
-
 }

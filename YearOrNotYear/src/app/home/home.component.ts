@@ -13,8 +13,6 @@ export class HomeComponent {
 
   constructor(private modalService: NgbModal, private auth: AuthService, private router: Router) {
   }
-  title = 'YearOrNotYear';
-
   loginUser(event) {
     event.preventDefault();
     const target = event.target;
@@ -36,26 +34,29 @@ export class HomeComponent {
     event.preventDefault();
     const target = event.target;
     const errors = [];
-    const username = target.querySelector('#Rusername').value;
+    const email = target.querySelector('#Remail').value;
     const password = target.querySelector('#Rpassword').value;
     const cpassword = target.querySelector('#Rcpassword').value;
+    const firstName = target.querySelector('#RfirstName').value;
+    const lastName = target.querySelector('#RlastName').value;
+    const year = target.querySelector('#Ryear').value;
 
     if (password != cpassword) {
       errors.push('Passswords do not match');
     }
     if (errors.length === 0) {
-      this.auth.registerUser(username, password).subscribe(data => {
+      this.auth.registerUser(email, password, firstName, lastName, year).subscribe(data => {
         console.log(data);
         if (data.success) {
           this.router.navigate(['dashboard']);
         }
       });
     }
-    console.log(username, password);
+    console.log(email, password, firstName, lastName, year);
   }
 
   open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size: 'lg'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;

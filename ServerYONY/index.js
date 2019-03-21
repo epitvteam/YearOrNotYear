@@ -46,7 +46,7 @@ app.get('/api/isloggedin', (req, res) => {
 });
 
 app.post('/api/register', async (req, res) => {
-    const {email, password} = req.body;
+    const {email, password, firstName, lastName, year} = req.body;
 
     const existingUser = await User.findOne({email});
     if (existingUser) {
@@ -58,7 +58,12 @@ app.post('/api/register', async (req, res) => {
     }
     const user = new User({
         email,
-        password
+        password,
+        firstName,
+        lastName,
+        year,
+        modulesAdd: [{moduleName: '', cred: ''}],
+        modulesHave: [{moduleName: '', cred: ''}]
     });
     const result = await user.save();
     console.log(result);
@@ -82,7 +87,9 @@ app.get('/api/data', async (req, res) => {
     res.json({
         status: true,
         email: req.session.user,
-        quote: user.quote
+        firstName: user.firstName,
+        lastName: user.lastName,
+        year: user.year
     })
 });
 
@@ -92,6 +99,97 @@ app.get('/api/logout', (req, res) => {
 
     res.json({
         success: true
+    });
+});
+
+app.post('/api/moduleUpdate', async (req, res) => {
+    const user = await User.findOne({email: req.session.user});
+    if (!user) {
+        res.json({
+            success: false,
+            message: 'invalid'
+        });
+        return
+    }
+    await User.updateOne(
+        {
+            email: req.session.user,
+            "modulesAdd.moduleName": req.body.nameModule,
+        },
+        {
+            $set: {
+                "modulesAdd.$": {
+                    "moduleName": req.body.nameModule,
+                    "cred": req.body.cred
+                }
+            }
+        });
+    res.json({
+        success: true,
+        message: 'Updated'
+    });
+});
+
+app.post('/api/moduleCreate', async (req, res) => {
+    const user = await User.findOne({email: req.session.user});
+    if (!user) {
+        res.json({
+            success: false,
+            message: 'invalid'
+        });
+        return
+    }
+    var ap = {
+        moduleName: req.body.nameModule,
+        cred: req.body.cred
+    };
+
+    await User.updateOne(
+        {
+            email: req.session.user
+        },
+        {
+            $push: {
+                'modulesAdd': ap
+            }
+        },
+        {
+            safe: true,
+            upsert: true,
+            new: true
+        });
+
+    res.json({
+        success: true,
+        message: 'Created'
+    });
+});
+
+app.post('/api/moduleCreate', async (req, res) => {
+
+    const user = await User.findOne({email: req.session.user});
+    if (!user) {
+        res.json({
+            success: false,
+            message: 'invalid'
+        });
+        return
+    }
+    await user.create(
+        {
+            email: req.session.user
+        },
+        {
+            $set: {
+                "modulesAdd.$": {
+                    "moduleName": req.body.nameModule,
+                    "cred": req.body.cred
+                }
+            }
+        });
+    res.json({
+        success: true,
+        message: 'Create'
     });
 });
 
