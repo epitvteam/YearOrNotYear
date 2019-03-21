@@ -45,8 +45,9 @@ export class DashboardComponent implements OnInit {
           console.log('Module set in DB');
         }
       });
+    this.getModulesSubscribed('auth-f6f274a14de80a2343e2c9b75186a460dbc236c5');
+    this.getModulesNotSubscribed('auth-f6f274a14de80a2343e2c9b75186a460dbc236c5');
     }
-    console.log(nameModule, cred);
   }
 
   ngOnInit(): void {
@@ -71,6 +72,7 @@ export class DashboardComponent implements OnInit {
         event.previousIndex,
         event.currentIndex);
       this.get_credit();
+      this.calculGradient();
       this.get_Descri();
     }
   }
@@ -144,7 +146,7 @@ export class DashboardComponent implements OnInit {
   get_credit() {
     this.calcul = 0;
     for (let loop of this.itemsHave) {
-      this.calcul += loop.cred;
+      this.calcul += Number(loop.credits);
     }
   }
 
@@ -173,6 +175,7 @@ export class DashboardComponent implements OnInit {
     var JsonInArray;
     var descriptions;
     var datas = await this.http.get<any>(baseUrl).toPromise();
+
     for (let entry of datas) {
       //REPLACE 2018 BY YEAR
       if ((entry.status == 'ongoing' || entry.status == 'valid' || entry.status == 'fail') && entry.scolaryear == 2018) {
@@ -189,7 +192,9 @@ export class DashboardComponent implements OnInit {
     }
     console.log(returnArray);
     this.itemsHave = returnArray;
-    return (returnArray);
+    this.get_credit();
+    this.calculGradient();
+    return(returnArray);
   }
 
   async getModulesNotSubscribed(autologin) {
@@ -216,4 +221,38 @@ export class DashboardComponent implements OnInit {
     this.items = returnArray;
     return (returnArray);
   }
+
+  calculGradient() {
+    const element: HTMLElement = document.getElementById('gradient');
+
+    if (this.calcul <= 40 && this.calcul > 0) {
+      element.setAttribute('style', 'background-image: linear-gradient(to right, red, white, white)');
+    } else if (this.calcul < 60 && this.calcul > 40) {
+      element.setAttribute('style', 'background-image: linear-gradient(to right, orange, white)');
+    } else if (this.calcul >= 60 && this.calcul < 75) {
+      element.setAttribute('style', 'background-image: linear-gradient(to right, green, green, green, green, white)');
+    } else if (this.calcul <= 0) {
+      element.setAttribute('style', 'background-image: linear-gradient(to right, grey, lightgrey)');
+    } else if (this.calcul >= 75) {
+      element.setAttribute('style', 'background-image: linear-gradient(to right, red, yellow, purple, blue, green)');
+    }
+  }
+
+  clear() {
+    this.items = this.items.concat(this.itemsHave);
+    this.itemsHave = [];
+    this.get_credit();
+    this.calculGradient();
+  }
+
+  async reload() {
+    let img = document.querySelector('.gifimg');
+    img.setAttribute('src', 'assets/images/chargement.gif');
+    img.setAttribute('style', 'width: 30px');
+    await this.getModulesSubscribed('auth-f6f274a14de80a2343e2c9b75186a460dbc236c5');
+    this.getModulesNotSubscribed('auth-f6f274a14de80a2343e2c9b75186a460dbc236c5');
+    img.setAttribute('src', '');
+    img.setAttribute('style', '');
+  }
+
 }
