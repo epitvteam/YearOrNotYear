@@ -9,8 +9,8 @@
         <form class="formlog" (submit)="loginUser($event)">
             <h1>Bienvenue</h1>
             <p>Remplis les entrées pour te connecter</p>
-            <input type="text" placeholder="Username" id="username"/>
-            <input type="password" placeholder="Password" id="password"/>
+            <input class="inputlog" type="text" placeholder="E-mail" id="username"/>
+            <input class="inputlog" type="password" placeholder="Mot de passe" id="password"/>
             <br>
             <button class="raw btnlog" style="" type="submit" value="submit">Se connecter</button>
         </form>
@@ -37,12 +37,12 @@
         <form class="formlog" (submit)="RegisterUser($event)">
             <h1>Inscription</h1>
             <p>Remplis le formulaire d'inscription</p>
-            <input type="email" placeholder="Email" id="Remail" required/>
-            <input type="password" placeholder="Password" id="Rpassword" required/>
-            <input type="password" placeholder="Retape Password" id="Rcpassword" required/>
-            <input type="text" placeholder="First Name" id="RfirstName" required/>
-            <input type="text" placeholder="Last name" id="RlastName" required/>
-            <input type="number" placeholder="Year" id="Ryear" required/>
+            <input class="inputlog" type="email" placeholder="E-mail" id="Remail" required/>
+            <input class="inputlog" type="password" placeholder="Mot de passe" id="Rpassword" required/>
+            <input class="inputlog" type="password" placeholder="Retaper votre mot de passe" id="Rcpassword" required/>
+            <input class="inputlog" type="text" placeholder="Prénom" id="RfirstName" required/>
+            <input class="inputlog" type="text" placeholder="Nom" id="RlastName" required/>
+            <input class="inputlog" type="number" placeholder="Année de promotion" id="Ryear" required/>
             <br>
             <button class="btnlog" type="submit" value="submit">S'inscrire</button>
         </form>
