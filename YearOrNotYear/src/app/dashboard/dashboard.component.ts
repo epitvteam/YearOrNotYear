@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient, JsonpClientBackend} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import {Observable} from 'rxjs';
 import {UserService} from '../user.service';
 import {Router} from '@angular/router';
 import {AuthService} from '../auth.service';
@@ -20,6 +19,7 @@ export class DashboardComponent implements OnInit {
   public itemsHave;
   public calcul = 0;
   public cred = 0;
+  public description = 'NULL';
   email = 'Loading email';
   firstName = 'Loading firstName';
   lastName = 'Loading lastName';
@@ -45,8 +45,8 @@ export class DashboardComponent implements OnInit {
           console.log('Module set in DB');
         }
       });
-    this.getModulesSubscribed('auth-f6f274a14de80a2343e2c9b75186a460dbc236c5');
-    this.getModulesNotSubscribed('auth-f6f274a14de80a2343e2c9b75186a460dbc236c5');
+      this.getModulesSubscribed('token');
+      this.getModulesNotSubscribed('token');
     }
   }
 
@@ -78,12 +78,13 @@ export class DashboardComponent implements OnInit {
   }
 
   open(content, data) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size: 'lg'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
     this.cred = data.credits;
+    this.description = data.description;
   }
 
   private getDismissReason(reason: any): string {
@@ -100,11 +101,12 @@ export class DashboardComponent implements OnInit {
     if (param == "+")
       this.cred++;
     if (param == "-")
-      if (this.cred >= 0)
+      if (this.cred > 0)
         this.cred--;
   }
 
   ret_cred_counter() {
+    console.log(this.cred);
   }
 
   get_csv() {
@@ -194,7 +196,7 @@ export class DashboardComponent implements OnInit {
     this.itemsHave = returnArray;
     this.get_credit();
     this.calculGradient();
-    return(returnArray);
+    return (returnArray);
   }
 
   async getModulesNotSubscribed(autologin) {

@@ -9,13 +9,16 @@
     <div class="modal-body">
         <form>
             <div class="description">
+              <span style="white-space: pre-line">
+                {{description}}
+              </span>
             </div>
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" (click)="addmin_cred_counter('-')">-</button>
+        <button type="button" class="plus-min-button" (click)="addmin_cred_counter('-')">-</button>
         {{cred}}
-        <button type="button" (click)="addmin_cred_counter('+')">+</button>
+        <button type="button" class="plus-min-button" (click)="addmin_cred_counter('+')">+</button>
         <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')" (click)="ret_cred_counter()">Close</button>
 
     </div>
@@ -129,7 +132,8 @@
       </div>
     </div>
     <div style="float: left; margin: 20px;">
-        <input type="button" (click)="get_csv()" value="Download CSV">
+    {{calcul}}
+        <input type="button" class="button-csv" (click)="get_csv()" value="Download CSV">
     </div>
   </div>
 </div>
