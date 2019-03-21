@@ -62,8 +62,8 @@ app.post('/api/register', async (req, res) => {
         firstName,
         lastName,
         year,
-        modulesAdd: [{moduleName: '', cred: ''}],
-        modulesHave: [{moduleName: '', cred: ''}]
+        modulesAdd: [],
+        modulesHave: []
     });
     const result = await user.save();
     console.log(result);
