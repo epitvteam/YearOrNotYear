@@ -27,8 +27,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(private http: HttpClient, private modalService: NgbModal, private user: UserService,
               private router: Router, private auth: AuthService) {
-    this.getModulesSubscribed('auth-b7f9b2f6c0ced60d38430f4ecdc600fc9d9c733f');
-    this.getModulesNotSubscribed('auth-b7f9b2f6c0ced60d38430f4ecdc600fc9d9c733f');
+    this.getModulesSubscribed('auth-d679ab307081753c82826e504aec7eeea539772f');
+    this.getModulesNotSubscribed('auth-d679ab307081753c82826e504aec7eeea539772f');
   }
 
   createModule(event) {
@@ -251,8 +251,8 @@ export class DashboardComponent implements OnInit {
     let img = document.querySelector('.gifimg');
     img.setAttribute('src', 'assets/images/chargement.gif');
     img.setAttribute('style', 'width: 30px');
-    await this.getModulesSubscribed('auth-f6f274a14de80a2343e2c9b75186a460dbc236c5');
-    this.getModulesNotSubscribed('auth-f6f274a14de80a2343e2c9b75186a460dbc236c5');
+    await this.getModulesSubscribed('auth-d679ab307081753c82826e504aec7eeea539772f');
+    this.getModulesNotSubscribed('auth-d679ab307081753c82826e504aec7eeea539772f');
     img.setAttribute('src', '');
     img.setAttribute('style', '');
   }
