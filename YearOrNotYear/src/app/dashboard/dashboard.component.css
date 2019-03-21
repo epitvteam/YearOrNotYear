@@ -179,8 +179,8 @@ nav {
 }
 
 .moduleBlock {
-  height: 600px;
-  margin-top: 150px;
+  height: 700px;
+  margin-top: 20px;
   border-radius: 8px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
   overflow: hidden;
@@ -191,7 +191,7 @@ nav {
   margin-left: auto;
   margin-right: auto;
   width: 90%;
-  max-height: 500px;
+  max-height: 620px;
 }
 
 .moduleBox {
@@ -246,6 +246,51 @@ nav {
 }
 
 .gradientBar {
+  margin-top: 100px;
   height: 100px;
-  background-color: red;
+}
+
+.creditBox {
+  width: 100%;
+  height: 80px;
+  margin-top: 10px;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+}
+
+.searchBar {
+  padding-left: 10px;
+  width: 95%;
+  background-color: white;
+  color: #949494;
+  height: 40px;
+  border-bottom: 2px solid #3A3985 !important;
+}
+
+.creditsInBar {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.buttonClear {
+  margin-top: 10px;
+  margin-left: 10%;
+  width: 80%;
+  height: 70%;
+  font-size: 15px;
+  color: white;
+  border-radius: 50px;
+  border: 0;
+  background-image: linear-gradient(-106deg, #F0712A, #FCCB4A);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  text-align: center;
+  cursor: pointer;
+}
+
+.loadingGIF {
+  z-index: 3;
+  position: absolute;
+  top: 400px;
+  left: 150px;
 }
