@@ -27,8 +27,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(private http: HttpClient, private modalService: NgbModal, private user: UserService,
               private router: Router, private auth: AuthService) {
-    this.getModulesSubscribed('auth-b7f9b2f6c0ced60d38430f4ecdc600fc9d9c733f');
-    this.getModulesNotSubscribed('auth-b7f9b2f6c0ced60d38430f4ecdc600fc9d9c733f');
+    this.getModulesSubscribed('auth-92a5d79d3a8c4919f312b9caeeccac8eabfff492');
+    this.getModulesNotSubscribed('auth-92a5d79d3a8c4919f312b9caeeccac8eabfff492');
   }
 
   createModule(event) {
@@ -45,8 +45,8 @@ export class DashboardComponent implements OnInit {
           console.log('Module set in DB');
         }
       });
-      this.getModulesSubscribed('token');
-      this.getModulesNotSubscribed('token');
+      this.getModulesSubscribed('auth-92a5d79d3a8c4919f312b9caeeccac8eabfff492');
+      this.getModulesNotSubscribed('auth-92a5d79d3a8c4919f312b9caeeccac8eabfff492');
     }
   }
 
