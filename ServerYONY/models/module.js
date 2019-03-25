@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 
 const ModuleSchema = new mongoose.Schema({
-    nameModule: String,
-    cred: String
+    Module: Array,
 });
 
 const Module = mongoose.model('Module', ModuleSchema);

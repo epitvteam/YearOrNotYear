@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit {
   firstName = 'Loading firstName';
   lastName = 'Loading lastName';
   year = 'Loading year';
+  moduleSync = [];
 
   constructor(private http: HttpClient, private modalService: NgbModal, private user: UserService,
               private router: Router, private auth: AuthService) {
@@ -57,6 +58,8 @@ export class DashboardComponent implements OnInit {
         this.firstName = data.firstName;
         this.lastName = data.lastName;
         this.year = data.year;
+        this.moduleSync = data.modulesAdd;
+        console.log(this.moduleSync);
       } else {
         this.router.navigate(['home']);
       }
