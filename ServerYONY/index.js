@@ -4,6 +4,8 @@ const session = require('express-session');
 const app = express();
 const mongoose = require('mongoose');
 const User = require('./models/user');
+const Module = require('./models/module');
+const ObjectId = require('mongodb').ObjectID;
 
 app.use(session({
     secret: 'ksjkjdskdsjk649403jg34ie99ghhdsoisoq56880290',
@@ -16,6 +18,18 @@ mongoose.connect('mongodb://localhost:27017/angulardb')
     .then(() => console.log('Mongoose up'));
 
 app.use(bodyPaser.json());
+
+app.post('/api/syncModule', async (req, res) => {
+    const moduleSave = new Module({
+        moduleSync: []
+    });
+    const resultModule = await moduleSave.save();
+    console.log(resultModule);
+    res.json({
+        success: true,
+        message: "Create"
+    });
+});
 
 app.post('/api/login', async (req, res) => {
     const {email, password} = req.body;
@@ -47,8 +61,9 @@ app.get('/api/isloggedin', (req, res) => {
 
 app.post('/api/register', async (req, res) => {
     const {email, password, firstName, lastName, year} = req.body;
-
     const existingUser = await User.findOne({email});
+    console.log("TEST");
+    const arrayMod = await Module.find({_id:ObjectId("5c98e27b2dfcea3b0555b7dd")});
     if (existingUser) {
         res.json({
             success: false,
@@ -62,7 +77,7 @@ app.post('/api/register', async (req, res) => {
         firstName,
         lastName,
         year,
-        modulesAdd: [],
+        modulesAdd: arrayMod,
         modulesHave: []
     });
     const result = await user.save();
@@ -84,12 +99,14 @@ app.get('/api/data', async (req, res) => {
         });
         return
     }
+    console.log(user.moduleAdd);
     res.json({
         status: true,
         email: req.session.user,
         firstName: user.firstName,
         lastName: user.lastName,
-        year: user.year
+        year: user.year,
+        modulesAdd: user.modulesAdd
     })
 });
 

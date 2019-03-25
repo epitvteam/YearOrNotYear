@@ -8,6 +8,7 @@ interface myData {
   firstName: string;
   lastName: string;
   year: string;
+  modulesAdd: [];
 }
 
 interface isLoggedIn {
