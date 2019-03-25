@@ -19,6 +19,7 @@ export class DashboardComponent implements OnInit {
   public itemsHave;
   public calcul = 0;
   public cred = 0;
+  public ModuleName;
   public description = 'NULL';
   email = 'Loading email';
   firstName = 'Loading firstName';
@@ -27,8 +28,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(private http: HttpClient, private modalService: NgbModal, private user: UserService,
               private router: Router, private auth: AuthService) {
-    this.getModulesSubscribed('auth-d679ab307081753c82826e504aec7eeea539772f');
-    this.getModulesNotSubscribed('auth-d679ab307081753c82826e504aec7eeea539772f');
+    //this.getModulesSubscribed('auth-d679ab307081753c82826e504aec7eeea539772f');
+    //this.getModulesNotSubscribed('auth-d679ab307081753c82826e504aec7eeea539772f');
   }
 
   createModule(event) {
@@ -85,6 +86,7 @@ export class DashboardComponent implements OnInit {
     });
     this.cred = data.credits;
     this.description = data.description;
+    this.ModuleName = data.name;
   }
 
   private getDismissReason(reason: any): string {
@@ -106,7 +108,22 @@ export class DashboardComponent implements OnInit {
   }
 
   ret_cred_counter() {
-    console.log(this.cred);
+    let i = 0;
+    for (let each of this.itemsHave) {
+      if (each.name === this.ModuleName) {
+        this.itemsHave[i].credits = this.cred;
+      }
+      i++;
+    }
+    i = 0;
+    for (let echs of this.items) {
+      if (echs.name === this.ModuleName) {
+        this.items[i].credits = this.cred;
+      }
+      i++;
+    }
+    this.get_credit();
+    this.calculGradient();
   }
 
   get_csv() {
@@ -148,7 +165,9 @@ export class DashboardComponent implements OnInit {
   get_credit() {
     this.calcul = 0;
     for (let loop of this.itemsHave) {
-      this.calcul += Number(loop.credits);
+      if (loop.status !== 'fail') {
+        this.calcul += Number(loop.credits);
+      }
     }
   }
 
@@ -247,14 +266,14 @@ export class DashboardComponent implements OnInit {
     this.calculGradient();
   }
 
-  async reload() {
+  async load(token: string) {
     let img = document.querySelector('.gifimg');
+    let auth = token.substr(25);
     img.setAttribute('src', 'assets/images/chargement.gif');
     img.setAttribute('style', 'width: 30px');
-    await this.getModulesSubscribed('auth-d679ab307081753c82826e504aec7eeea539772f');
-    this.getModulesNotSubscribed('auth-d679ab307081753c82826e504aec7eeea539772f');
+    await this.getModulesSubscribed(auth);
+    await this.getModulesNotSubscribed(auth);
     img.setAttribute('src', '');
     img.setAttribute('style', '');
   }
-
 }

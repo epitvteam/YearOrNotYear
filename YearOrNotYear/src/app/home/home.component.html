@@ -6,7 +6,7 @@
         </button>
     </div>
     <div class="modal-body">
-        <form class="formlog" (submit)="loginUser($event)">
+        <form class="formlog" (submit)="loginUser($event); modal.dismiss('Cross click')">
             <h1>Bienvenue</h1>
             <p>Remplis les entrées pour te connecter</p>
             <input class="inputlog" type="text" placeholder="E-mail" id="username"/>
@@ -17,7 +17,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3" style="display: inline; display: -webkit-box"> Pas de compte ?
-                    <div class="col-md" (click)="open(signin); modal.dismiss('Cross click')"
+                    <div class="col-md" (click)="open(signin);"
                          style="cursor: pointer; color: #3499FF"> S'inscrire ici
                     </div>
                 </div>
