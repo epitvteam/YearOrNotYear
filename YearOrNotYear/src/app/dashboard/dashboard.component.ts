@@ -15,8 +15,8 @@ import {Angular5Csv} from 'angular5-csv/dist/Angular5-csv';
 
 export class DashboardComponent implements OnInit {
   public closeResult;
-  public items;
-  public itemsHave;
+  public items = [];
+  public itemsHave = [];
   public calcul = 0;
   public cred = 0;
   public ModuleName;
@@ -25,12 +25,9 @@ export class DashboardComponent implements OnInit {
   firstName = 'Loading firstName';
   lastName = 'Loading lastName';
   year = 'Loading year';
-  moduleSync = [];
 
   constructor(private http: HttpClient, private modalService: NgbModal, private user: UserService,
               private router: Router, private auth: AuthService) {
-    //this.getModulesSubscribed('auth-d679ab307081753c82826e504aec7eeea539772f');
-    //this.getModulesNotSubscribed('auth-d679ab307081753c82826e504aec7eeea539772f');
   }
 
   createModule(event) {
@@ -47,20 +44,23 @@ export class DashboardComponent implements OnInit {
           console.log('Module set in DB');
         }
       });
-      this.getModulesSubscribed('token');
-      this.getModulesNotSubscribed('token');
     }
   }
 
   ngOnInit(): void {
+    let i = 0;
     this.user.getData().subscribe(data => {
       if (data.status) {
         this.email = data.email;
         this.firstName = data.firstName;
         this.lastName = data.lastName;
         this.year = data.year;
-        this.moduleSync = data.modulesAdd;
-        console.log(this.moduleSync);
+        this.items = data.modulesAdd['0'].Module;
+        for (let each of data.modulesAdd) {
+          if (i > 0)
+            this.items = this.items.concat(each);
+          i++;
+        }
       } else {
         this.router.navigate(['home']);
       }
@@ -103,9 +103,9 @@ export class DashboardComponent implements OnInit {
   }
 
   addmin_cred_counter(param) {
-    if (param == "+")
+    if (param == '+')
       this.cred++;
-    if (param == "-")
+    if (param == '-')
       if (this.cred > 0)
         this.cred--;
   }
@@ -115,6 +115,7 @@ export class DashboardComponent implements OnInit {
     for (let each of this.itemsHave) {
       if (each.name === this.ModuleName) {
         this.itemsHave[i].credits = this.cred;
+        break;
       }
       i++;
     }
@@ -122,6 +123,7 @@ export class DashboardComponent implements OnInit {
     for (let echs of this.items) {
       if (echs.name === this.ModuleName) {
         this.items[i].credits = this.cred;
+        break;
       }
       i++;
     }
