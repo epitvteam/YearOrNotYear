@@ -131,13 +131,13 @@ app.post('/api/moduleUpdate', async (req, res) => {
     await User.updateOne(
         {
             email: req.session.user,
-            "modulesAdd.moduleName": req.body.nameModule,
+            "modulesAdd.name": req.body.nameModule,
         },
         {
             $set: {
                 "modulesAdd.$": {
-                    "moduleName": req.body.nameModule,
-                    "cred": req.body.cred
+                    "name": req.body.nameModule,
+                    "credits": req.body.cred
                 }
             }
         });
@@ -157,8 +157,8 @@ app.post('/api/moduleCreate', async (req, res) => {
         return
     }
     var ap = {
-        moduleName: req.body.nameModule,
-        cred: req.body.cred
+        name: req.body.nameModule,
+        credits: req.body.cred
     };
 
     await User.updateOne(
@@ -199,8 +199,8 @@ app.post('/api/moduleCreate', async (req, res) => {
         {
             $set: {
                 "modulesAdd.$": {
-                    "moduleName": req.body.nameModule,
-                    "cred": req.body.cred
+                    "name": req.body.nameModule,
+                    "credits": req.body.cred
                 }
             }
         });
