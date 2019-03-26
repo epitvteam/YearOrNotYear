@@ -319,3 +319,21 @@ nav {
 .modal-basic-title {
   max-width: 1200px;
 }
+
+.pastilleright {
+  width: 10px;
+  height: 10px;
+  background-color: grey;
+  float: right;
+  margin-right: 8px;
+  border-radius: 50px;
+  margin-top: 8px;
+  cursor: help;
+}
+
+.syncBar {
+  width: 100%;
+  border: 2px solid #3A3985;
+  border-radius: 8px;
+  padding: 10px;
+}

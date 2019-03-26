@@ -19,17 +19,15 @@ export class DashboardComponent implements OnInit {
   public itemsHave = [];
   public calcul = 0;
   public cred = 0;
+  public ModuleName;
   public description = 'NULL';
   email = 'Loading email';
   firstName = 'Loading firstName';
   lastName = 'Loading lastName';
   year = 'Loading year';
-  moduleSync = [];
 
   constructor(private http: HttpClient, private modalService: NgbModal, private user: UserService,
               private router: Router, private auth: AuthService) {
-    this.getModulesSubscribed('auth-92a5d79d3a8c4919f312b9caeeccac8eabfff492');
-    this.getModulesNotSubscribed('auth-92a5d79d3a8c4919f312b9caeeccac8eabfff492');
   }
 
   createModule(event) {
@@ -46,20 +44,23 @@ export class DashboardComponent implements OnInit {
           console.log('Module set in DB');
         }
       });
-      this.getModulesSubscribed('auth-92a5d79d3a8c4919f312b9caeeccac8eabfff492');
-      this.getModulesNotSubscribed('auth-92a5d79d3a8c4919f312b9caeeccac8eabfff492');
     }
   }
 
   ngOnInit(): void {
+    let i = 0;
     this.user.getData().subscribe(data => {
       if (data.status) {
         this.email = data.email;
         this.firstName = data.firstName;
         this.lastName = data.lastName;
         this.year = data.year;
-        this.moduleSync = data.modulesAdd;
-        console.log(this.moduleSync);
+        this.items = data.modulesAdd['0'].Module;
+        for (let each of data.modulesAdd) {
+          if (i > 0)
+            this.items = this.items.concat(each);
+          i++;
+        }
       } else {
         this.router.navigate(['home']);
       }
@@ -88,6 +89,7 @@ export class DashboardComponent implements OnInit {
     });
     this.cred = data.credits;
     this.description = data.description;
+    this.ModuleName = data.name;
   }
 
   private getDismissReason(reason: any): string {
@@ -101,15 +103,32 @@ export class DashboardComponent implements OnInit {
   }
 
   addmin_cred_counter(param) {
-    if (param == "+")
+    if (param == '+')
       this.cred++;
-    if (param == "-")
+    if (param == '-')
       if (this.cred > 0)
         this.cred--;
   }
 
   ret_cred_counter() {
-    console.log(this.cred);
+    let i = 0;
+    for (let each of this.itemsHave) {
+      if (each.name === this.ModuleName) {
+        this.itemsHave[i].credits = this.cred;
+        break;
+      }
+      i++;
+    }
+    i = 0;
+    for (let echs of this.items) {
+      if (echs.name === this.ModuleName) {
+        this.items[i].credits = this.cred;
+        break;
+      }
+      i++;
+    }
+    this.get_credit();
+    this.calculGradient();
   }
 
   get_csv() {
@@ -135,7 +154,9 @@ export class DashboardComponent implements OnInit {
   get_credit() {
     this.calcul = 0;
     for (let loop of this.itemsHave) {
-      this.calcul += Number(loop.credits);
+      if (loop.status !== 'fail') {
+        this.calcul += Number(loop.credits);
+      }
     }
   }
 
@@ -234,14 +255,14 @@ export class DashboardComponent implements OnInit {
     this.calculGradient();
   }
 
-  async reload() {
+  async load(token: string) {
     let img = document.querySelector('.gifimg');
+    let auth = token.substr(25);
     img.setAttribute('src', 'assets/images/chargement.gif');
     img.setAttribute('style', 'width: 30px');
-    await this.getModulesSubscribed('auth-f6f274a14de80a2343e2c9b75186a460dbc236c5');
-    this.getModulesNotSubscribed('auth-f6f274a14de80a2343e2c9b75186a460dbc236c5');
+    await this.getModulesSubscribed(auth);
+    await this.getModulesNotSubscribed(auth);
     img.setAttribute('src', '');
     img.setAttribute('style', '');
   }
-
 }
