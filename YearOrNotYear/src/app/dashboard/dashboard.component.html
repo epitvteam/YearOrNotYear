@@ -120,7 +120,7 @@
                [cdkDropListConnectedTo]="[todoList]"
                (cdkDropListDropped)="drop($event)"
                 style="max-height: 550px">
-            <div class="row moduleBox" *ngFor="let data of items | filter:'name' : term" cdkDrag>
+            <div class="row moduleBox" *ngFor="let data of moduleSync[0].Module | filter:'name' : term" cdkDrag>
               <div class="col-md-7 moduleName">{{data.name}}</div>
               <div class="col-md-2" style="padding: 0">
                 <div (click)="open(content, data)" style="position: absolute; bottom: 0; right: 10px">Détails</div>
@@ -132,7 +132,6 @@
       </div>
     </div>
     <div style="float: left; margin: 20px;">
-    {{calcul}}
         <input type="button" class="button-csv" (click)="get_csv()" value="Download CSV">
     </div>
   </div>

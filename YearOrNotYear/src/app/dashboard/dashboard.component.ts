@@ -15,8 +15,8 @@ import {Angular5Csv} from 'angular5-csv/dist/Angular5-csv';
 
 export class DashboardComponent implements OnInit {
   public closeResult;
-  public items;
-  public itemsHave;
+  public items = [];
+  public itemsHave = [];
   public calcul = 0;
   public cred = 0;
   public description = 'NULL';
@@ -113,39 +113,23 @@ export class DashboardComponent implements OnInit {
   }
 
   get_csv() {
-    var data = [
-      {
-        name: "Constant LOUBIER",
-        age: 19,
-        Credit: 80,
-        description: "I am London"
-      },
-      {
-        name: "Pierre HERMAN",
-        age: 19,
-        Credit: 80,
-        description: "I am Dublin"
-      },
-      {
-        name: "Hugo CASTELLI",
-        age: 19,
-        Credit: 80,
-        description: "I am Paris"
-      },
-    ];
-
+    const tab  = Object.assign([], this.itemsHave);
+    let len = tab.length;
+    for (let loop = 0; loop != len ; loop++) {
+      delete tab[loop].description;
+    }
     var options = {
       fieldSeparator: ',',
       quoteStrings: '"',
       decimalseparator: '.',
       showLabels: true,
       showTitle: true,
+      title: 'Votre simulation de crédits',
       useBom: true,
       noDownload: false,
-      headers: ["Name", "Age", "Credit", "Description"]
+      headers: ["Nom du module", "Année", "Crédits", "Etat"]
     };
-
-    new Angular5Csv(data, 'MyFileName', options);
+    new Angular5Csv(tab, this.lastName.concat(this.firstName), options);
   }
 
   get_credit() {
