@@ -1,83 +1,95 @@
 <ng-template #login let-modal>
-    <div class="modal-header" style="border-bottom: none">
-        <button type="button" class="close" style="outline: none" aria-label="Close"
-                (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <form class="formlog" (submit)="loginUser($event)">
-            <h1>Bienvenue</h1>
-            <p>Remplis les entrées pour te connecter</p>
-            <input class="inputlog" type="text" placeholder="E-mail" id="username"/>
-            <input class="inputlog" type="password" placeholder="Mot de passe" id="password"/>
-            <br>
-            <button class="raw btnlog" style="" type="submit" value="submit">Se connecter</button>
-        </form>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3" style="display: inline; display: -webkit-box"> Pas de compte ?
-                    <div class="col-md" (click)="open(signin); modal.dismiss('Cross click')"
-                         style="cursor: pointer; color: #3499FF"> S'inscrire ici
-                    </div>
-                </div>
-            </div>
+  <div class="modal-header" style="border-bottom: none">
+    <button type="button" class="close" style="outline: none" aria-label="Close"
+            (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form class="formlog" (submit)="loginUser($event)">
+      <h1>Bienvenue</h1>
+      <p>Remplis les entrées pour te connecter</p>
+      <input class="inputlog" type="text" placeholder="E-mail" id="username"/>
+      <input class="inputlog" type="password" placeholder="Mot de passe" id="password"/>
+      <br>
+      <button class="raw btnlog" style="" type="submit" value="submit">Se connecter</button>
+    </form>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3" style="display: inline; display: -webkit-box"> Pas de compte ?
+          <div class="col-md" (click)="open(signin); modal.dismiss('Cross click')"
+               style="cursor: pointer; color: #3499FF"> S'inscrire ici
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </ng-template>
 
 <ng-template #signin let-modal>
-    <div class="modal-header" style="border-bottom: none">
-        <button type="button" class="close" style="outline: none" aria-label="Close"
-                (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <form class="formlog" (submit)="RegisterUser($event)">
-            <h1>Inscription</h1>
-            <p>Remplis le formulaire d'inscription</p>
-            <input class="inputlog" type="email" placeholder="E-mail" id="Remail" required/>
-            <input class="inputlog" type="password" placeholder="Mot de passe" id="Rpassword" minlength="8" required/>
-            <input class="inputlog" type="password" placeholder="Retaper votre mot de passe" id="Rcpassword" minlength="8"required/>
-            <input class="inputlog" type="text" placeholder="Prénom" id="RfirstName" required/>
-            <input class="inputlog" type="text" placeholder="Nom" id="RlastName" required/>
-            <input class="inputlog" type="number" placeholder="Année de promotion" id="Ryear" required/>
-            <br>
-            <button class="btnlog" type="submit" value="submit">S'inscrire</button>
-        </form>
-    </div>
+  <div class="modal-header" style="border-bottom: none">
+    <button type="button" class="close" style="outline: none" aria-label="Close"
+            (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form class="formlog" (submit)="RegisterUser($event)">
+      <h1>Inscription</h1>
+      <p>Remplis le formulaire d'inscription</p>
+      <div id="err" class="displayn alert">
+        <span class="displayn closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        Entrer un mot de passe de plus de 8 caractères svp.
+      </div>
+      <div id="entre" class="displayn alert">
+        <span class="displayn closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        Merci de compléter toutes les entrées.
+      </div>
+      <div id="pasid" class="displayn alert">
+        <span class="displayn closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        Les deux mots de passe ne sont pas identiques.
+      </div>
+      <input class="inputlog" type="email" placeholder="E-mail" id="Remail" required/>
+      <input class="inputlog" type="password" placeholder="Mot de passe" id="Rpassword" minlength="8" required/>
+      <input class="inputlog" type="password" placeholder="Retaper votre mot de passe" id="Rcpassword" minlength="8" required/>
+      <input class="inputlog" type="text" placeholder="Prénom" id="RfirstName" required/>
+      <input class="inputlog" type="text" placeholder="Nom" id="RlastName" required/>
+      <input class="inputlog" type="number" placeholder="Année de promotion" id="Ryear" required/>
+      <br>
+      <button class="btnlog" type="submit" value="submit">S'inscrire</button>
+    </form>
+  </div>
 </ng-template>
 
 <div class="container-fluid">
-    <div class="title"
-         style="display: inline-block; text-align: left; color: #46CEFC; margin-top: 40px; margin-left: 10%">
-        <div style="font-size: 2vw; line-height: 0;">YearOrNotYear</div>
-        <br>
-        <div style="font-size: 0.7vw;">An Epitech Project for Epitech Students</div>
+  <div class="title"
+       style="display: inline-block; text-align: left; color: #46CEFC; margin-top: 40px; margin-left: 10%">
+    <div style="font-size: 2vw; line-height: 0;">YearOrNotYear</div>
+    <br>
+    <div style="font-size: 0.7vw;">An Epitech Project for Epitech Students</div>
+  </div>
+  <div (click)="open(login)" style="border-bottom: none" class="title"
+       style="float: right; display: inline-block; text-align: right; color: #46CEFC; margin-top: 40px; margin-right: 10%; cursor: pointer">
+    Sign In
+  </div>
+  <div class="row" style="margin-top: 100px;">
+    <div class="col-lg-6 col-md-12" style="color: #46CEFC; padding-left: 10%; padding-top: 8%; padding-right: 10%">
+      <div style="font-size: 40px; font-weight: bold">Organize your academic year <br>
+        with our revolutionary app<br></div>
+      <div style="font-size: 20px">Select only what matters to you !</div>
+      <br>
+      <button (click)="open(login)" style="background-color: #46CEFC; color: white" type="button"
+              class="btn btn-primary btn-round d-block">GET STARTED
+      </button>
     </div>
-    <div (click)="open(login)" style="border-bottom: none" class="title"
-         style="float: right; display: inline-block; text-align: right; color: #46CEFC; margin-top: 40px; margin-right: 10%; cursor: pointer">
-        Sign In
+    <div style="text-align: center" class="col-lg-6 col-md-12">
+      <img style="width: 90%" src="../../assets/images/planning.svg"/>
     </div>
-    <div class="row" style="margin-top: 100px;">
-        <div class="col-lg-6 col-md-12" style="color: #46CEFC; padding-left: 10%; padding-top: 8%; padding-right: 10%">
-            <div style="font-size: 40px; font-weight: bold">Organize your academic year <br>
-                with our revolutionary app<br></div>
-            <div style="font-size: 20px">Select only what matters to you !</div>
-            <br>
-            <button (click)="open(login)" style="background-color: #46CEFC; color: white" type="button"
-                    class="btn btn-primary btn-round d-block">GET STARTED
-            </button>
-        </div>
-        <div style="text-align: center" class="col-lg-6 col-md-12">
-            <img style="width: 90%" src="../../assets/images/planning.svg"/>
-        </div>
-    </div>
-    <div class="title" style="color: white; font-size: 25px; text-align: center; margin-top: 120px">
-        "A great organization is the key of success"
-    </div>
-    <div style="color: white; font-size: 15px; text-align: center; margin-top: 160px">
-        © 2019 YearOrNotYear. All rights reserved.
-    </div>
+  </div>
+  <div class="title" style="color: white; font-size: 25px; text-align: center; margin-top: 120px">
+    "A great organization is the key of success"
+  </div>
+  <div style="color: white; font-size: 15px; text-align: center; margin-top: 160px">
+    © 2019 YearOrNotYear. All rights reserved.
+  </div>
 </div>

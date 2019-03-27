@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {AuthService} from '../auth.service';
 import {Router} from '@angular/router';
+import {selector} from 'rxjs-compat/operator/publish';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-home',
@@ -43,6 +45,16 @@ export class HomeComponent {
 
     if (password != cpassword) {
       errors.push('Passswords do not match');
+      $('#pasid').removeClass('displayn');
+    }
+    else
+      $('#pasid').addClass('displayn');
+    if  (password.length < 8 || password.lenght < 8) {
+      errors.push('Password is to short');
+      $('#err').removeClass('displayn');
+    }
+    if (password.length >= 8) {
+      $('#err').addClass('displayn');
     }
     if (errors.length === 0) {
       this.auth.registerUser(email, password, firstName, lastName, year).subscribe(data => {
@@ -73,3 +85,5 @@ export class HomeComponent {
     }
   }
 }
+
+
