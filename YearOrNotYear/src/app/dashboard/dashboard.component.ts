@@ -15,7 +15,7 @@ import {Angular5Csv} from 'angular5-csv/dist/Angular5-csv';
 
 export class DashboardComponent implements OnInit {
   public closeResult;
-  public items = [];
+  public items;
   public itemsHave = [];
   public calcul = 0;
   public cred = 0;
@@ -48,32 +48,29 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getModulesOnDB();
+  }
+
+  async getModulesOnDB() {
     let i = 0;
-    this.user.getData().subscribe(data => {
-      if (data.status) {
-        this.email = data.email;
-        this.firstName = data.firstName;
-        this.lastName = data.lastName;
-        this.year = data.year;
-        this.items = data.modulesAdd[0].Module;
-        for (let each of data.modulesAdd) {
-          if (i > 0)
-            this.items = this.items.concat(each);
-          i++;
-        }
-      } else {
-        this.router.navigate(['home']);
+    let data = await this.user.getData().toPromise();
+    this.email = data.email;
+    this.firstName = data.firstName;
+    this.lastName = data.lastName;
+    this.year = data.year;
+    this.items = data.modulesAdd;
+    this.items = this.items['0'].Module;
+    for (let each of data.modulesAdd) {
+      if (i > 0) {
+        this.items = this.items.concat(each);
       }
-      let w = 0
-      while (w != data.modulesAdd.length) {
-         console.log(data.modulesAdd[w].Module);
-        w++;
-      }
-      //console.log(data.modulesAdd.length);
-    });
+      i++;
+    }
+    return data;
   }
 
   drop(event: CdkDragDrop<string[]>) {
+    console.log(event);
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -83,7 +80,6 @@ export class DashboardComponent implements OnInit {
         event.currentIndex);
       this.get_credit();
       this.calculGradient();
-      this.get_Descri();
     }
   }
 
@@ -93,9 +89,11 @@ export class DashboardComponent implements OnInit {
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
-    this.cred = data.credits;
-    this.description = data.description;
-    this.ModuleName = data.name;
+    if (typeof data !== 'undefined') {
+      this.cred = data.credits;
+      this.description = data.description;
+      this.ModuleName = data.name;
+    }
   }
 
   private getDismissReason(reason: any): string {
@@ -164,20 +162,6 @@ export class DashboardComponent implements OnInit {
         this.calcul += Number(loop.credits);
       }
     }
-  }
-
-  get_Descri() {
-  }
-
-  getInfos(autologin) {
-    let baseUrl = 'http://intra.epitech.eu/' + autologin + '/user/?format=json';
-    this.http.get<any>(baseUrl)
-      .subscribe(data => {
-        let loginUser = data.login;
-        let firstnameUser = data.firstname;
-        let lastnameUser = data.lastname;
-        var jsonRtn = {'login': loginUser, 'firstname': firstnameUser, 'lastname': lastnameUser};
-      });
   }
 
   async getDescription(autologin, modulecode, year, city) {
@@ -262,13 +246,21 @@ export class DashboardComponent implements OnInit {
   }
 
   async load(token: string) {
+    let i = 0;
     let img = document.querySelector('.gifimg');
     let auth = token.substr(25);
+    let data = await this.getModulesOnDB();
     img.setAttribute('src', 'assets/images/chargement.gif');
     img.setAttribute('style', 'width: 30px');
     await this.getModulesSubscribed(auth);
     await this.getModulesNotSubscribed(auth);
     img.setAttribute('src', '');
     img.setAttribute('style', '');
+    for (let each of data.modulesAdd) {
+      if (i > 0) {
+        this.items = this.items.concat(each);
+      }
+      i++;
+    }
   }
 }

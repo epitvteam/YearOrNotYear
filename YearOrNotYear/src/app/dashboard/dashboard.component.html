@@ -151,12 +151,12 @@
           </div>
         </div>
         <div class="row" style="height: 500px;">
-          <div class="moduleList scrollbar scrollbar-primary"
-               cdkDropList
+          <div cdkDropList
                #doneList="cdkDropList"
                [cdkDropListData]="items"
                [cdkDropListConnectedTo]="[todoList]"
                (cdkDropListDropped)="drop($event)"
+               class="moduleList scrollbar scrollbar-primary"
                 style="max-height: 550px">
             <div class="row moduleBox" *ngFor="let data of items | filter:'name' : term" cdkDrag>
               <div class="col-md-7 moduleName">{{data.name}}</div>
