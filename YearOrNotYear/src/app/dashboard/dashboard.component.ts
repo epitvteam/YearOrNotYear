@@ -16,20 +16,18 @@ import {Angular5Csv} from 'angular5-csv/dist/Angular5-csv';
 export class DashboardComponent implements OnInit {
   public closeResult;
   public items;
-  public itemsHave;
+  public itemsHave = [];
   public calcul = 0;
   public cred = 0;
+  public ModuleName;
   public description = 'NULL';
   email = 'Loading email';
   firstName = 'Loading firstName';
   lastName = 'Loading lastName';
   year = 'Loading year';
-  moduleSync = [];
 
   constructor(private http: HttpClient, private modalService: NgbModal, private user: UserService,
               private router: Router, private auth: AuthService) {
-    this.getModulesSubscribed('auth-b7f9b2f6c0ced60d38430f4ecdc600fc9d9c733f');
-    this.getModulesNotSubscribed('auth-b7f9b2f6c0ced60d38430f4ecdc600fc9d9c733f');
   }
 
   createModule(event) {
@@ -46,27 +44,33 @@ export class DashboardComponent implements OnInit {
           console.log('Module set in DB');
         }
       });
-      this.getModulesSubscribed('token');
-      this.getModulesNotSubscribed('token');
     }
   }
 
   ngOnInit(): void {
-    this.user.getData().subscribe(data => {
-      if (data.status) {
-        this.email = data.email;
-        this.firstName = data.firstName;
-        this.lastName = data.lastName;
-        this.year = data.year;
-        this.moduleSync = data.modulesAdd;
-        console.log(this.moduleSync);
-      } else {
-        this.router.navigate(['home']);
+    this.getModulesOnDB();
+  }
+
+  async getModulesOnDB() {
+    let i = 0;
+    let data = await this.user.getData().toPromise();
+    this.email = data.email;
+    this.firstName = data.firstName;
+    this.lastName = data.lastName;
+    this.year = data.year;
+    this.items = data.modulesAdd;
+    this.items = this.items['0'].Module;
+    for (let each of data.modulesAdd) {
+      if (i > 0) {
+        this.items = this.items.concat(each);
       }
-    });
+      i++;
+    }
+    return data;
   }
 
   drop(event: CdkDragDrop<string[]>) {
+    console.log(event);
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -76,7 +80,6 @@ export class DashboardComponent implements OnInit {
         event.currentIndex);
       this.get_credit();
       this.calculGradient();
-      this.get_Descri();
     }
   }
 
@@ -86,8 +89,11 @@ export class DashboardComponent implements OnInit {
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
-    this.cred = data.credits;
-    this.description = data.description;
+    if (typeof data !== 'undefined') {
+      this.cred = data.credits;
+      this.description = data.description;
+      this.ModuleName = data.name;
+    }
   }
 
   private getDismissReason(reason: any): string {
@@ -101,15 +107,32 @@ export class DashboardComponent implements OnInit {
   }
 
   addmin_cred_counter(param) {
-    if (param == "+")
+    if (param == '+')
       this.cred++;
-    if (param == "-")
+    if (param == '-')
       if (this.cred > 0)
         this.cred--;
   }
 
   ret_cred_counter() {
-    console.log(this.cred);
+    let i = 0;
+    for (let each of this.itemsHave) {
+      if (each.name === this.ModuleName) {
+        this.itemsHave[i].credits = this.cred;
+        break;
+      }
+      i++;
+    }
+    i = 0;
+    for (let echs of this.items) {
+      if (echs.name === this.ModuleName) {
+        this.items[i].credits = this.cred;
+        break;
+      }
+      i++;
+    }
+    this.get_credit();
+    this.calculGradient();
   }
 
   get_csv() {
@@ -151,22 +174,10 @@ export class DashboardComponent implements OnInit {
   get_credit() {
     this.calcul = 0;
     for (let loop of this.itemsHave) {
-      this.calcul += Number(loop.credits);
+      if (loop.status !== 'fail') {
+        this.calcul += Number(loop.credits);
+      }
     }
-  }
-
-  get_Descri() {
-  }
-
-  getInfos(autologin) {
-    let baseUrl = 'http://intra.epitech.eu/' + autologin + '/user/?format=json';
-    this.http.get<any>(baseUrl)
-      .subscribe(data => {
-        let loginUser = data.login;
-        let firstnameUser = data.firstname;
-        let lastnameUser = data.lastname;
-        var jsonRtn = {'login': loginUser, 'firstname': firstnameUser, 'lastname': lastnameUser};
-      });
   }
 
   async getDescription(autologin, modulecode, year, city) {
@@ -250,14 +261,22 @@ export class DashboardComponent implements OnInit {
     this.calculGradient();
   }
 
-  async reload() {
+  async load(token: string) {
+    let i = 0;
     let img = document.querySelector('.gifimg');
+    let auth = token.substr(25);
+    let data = await this.getModulesOnDB();
     img.setAttribute('src', 'assets/images/chargement.gif');
     img.setAttribute('style', 'width: 30px');
-    await this.getModulesSubscribed('auth-f6f274a14de80a2343e2c9b75186a460dbc236c5');
-    this.getModulesNotSubscribed('auth-f6f274a14de80a2343e2c9b75186a460dbc236c5');
+    await this.getModulesSubscribed(auth);
+    await this.getModulesNotSubscribed(auth);
     img.setAttribute('src', '');
     img.setAttribute('style', '');
+    for (let each of data.modulesAdd) {
+      if (i > 0) {
+        this.items = this.items.concat(each);
+      }
+      i++;
+    }
   }
-
 }
