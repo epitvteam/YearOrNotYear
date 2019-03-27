@@ -55,7 +55,7 @@ export class DashboardComponent implements OnInit {
         this.firstName = data.firstName;
         this.lastName = data.lastName;
         this.year = data.year;
-        this.items = data.modulesAdd['0'].Module;
+        this.items = data.modulesAdd[0].Module;
         for (let each of data.modulesAdd) {
           if (i > 0)
             this.items = this.items.concat(each);
@@ -64,6 +64,12 @@ export class DashboardComponent implements OnInit {
       } else {
         this.router.navigate(['home']);
       }
+      let w = 0
+      while (w != data.modulesAdd.length) {
+         console.log(data.modulesAdd[w].Module);
+        w++;
+      }
+      //console.log(data.modulesAdd.length);
     });
   }
 

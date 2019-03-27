@@ -158,7 +158,7 @@
                [cdkDropListConnectedTo]="[todoList]"
                (cdkDropListDropped)="drop($event)"
                 style="max-height: 550px">
-            <div class="row moduleBox" *ngFor="let data of moduleSync[0].Module | filter:'name' : term" cdkDrag>
+            <div class="row moduleBox" *ngFor="let data of items | filter:'name' : term" cdkDrag>
               <div class="col-md-7 moduleName">{{data.name}}</div>
               <div class="col-md-2" style="padding: 0">
                 <div *ngIf="data.status == 'fail'">
