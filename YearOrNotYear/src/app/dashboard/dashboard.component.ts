@@ -39,7 +39,6 @@ export class DashboardComponent implements OnInit {
 
     if (errors.length === 0) {
       this.auth.createModule(nameModule, cred).subscribe(data => {
-        console.log(data);
         if (data.success) {
           console.log('Module set in DB');
         }
@@ -70,7 +69,6 @@ export class DashboardComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    console.log(event);
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -180,6 +178,12 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  async getScolarYear(autologin) {
+    const URL = 'https://intra.epitech.eu/' + autologin + '/user/?format=json';
+    let data = await this.http.get<any>(URL).toPromise();
+    return (data.scolaryear);
+  }
+
   async getDescription(autologin, modulecode, year, city) {
     const URLb = 'http://intra.epitech.eu/' + autologin + '/module/' + year + '/' + modulecode + '/' + city + '/?format=json';
     return (await this.http.get(URLb).toPromise());
@@ -191,10 +195,10 @@ export class DashboardComponent implements OnInit {
     var JsonInArray;
     var descriptions;
     var datas = await this.http.get<any>(baseUrl).toPromise();
+    var scolarY = await this.getScolarYear(autologin);
 
     for (let entry of datas) {
-      //REPLACE 2018 BY YEAR
-      if ((entry.status == 'ongoing' || entry.status == 'valid' || entry.status == 'fail') && entry.scolaryear == 2018) {
+      if ((entry.status == 'ongoing' || entry.status == 'valid' || entry.status == 'fail') && entry.scolaryear == scolarY) {
         descriptions = await this.getDescription(autologin, entry.code, entry.scolaryear, entry.codeinstance);
         JsonInArray = {
           'name': entry.title,
@@ -219,12 +223,10 @@ export class DashboardComponent implements OnInit {
     var JsonInArray;
     var descriptions;
     var datas = await this.http.get<any>(baseUrl).toPromise();
-    if (!datas) {
-      console.log('tg');
-    }
+    var scolarY = await this.getScolarYear(autologin);
+
     for (let entry of datas) {
-      //REPLACE 2018 BY YEAR
-      if (entry.status == 'notregistered' && entry.scolaryear == 2018) {
+      if (entry.status == 'notregistered' && entry.scolaryear == scolarY) {
         descriptions = await this.getDescription(autologin, entry.code, entry.scolaryear, entry.codeinstance);
         JsonInArray = {
           'name': entry.title, 'scolaryear': entry.scolaryear, 'description': descriptions.description,

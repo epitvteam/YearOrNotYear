@@ -1,33 +1,37 @@
 <ng-template #content let-modal>
-    <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Description</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')" (click)="ret_cred_counter()">
-            <span aria-hidden="true">&times;</span>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Description</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')"
+            (click)="ret_cred_counter()">
+      <span aria-hidden="true">&times;</span>
 
-        </button>
-    </div>
-    <div class="modal-body">
-        <form>
-            <div class="description">
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="description">
               <span style="white-space: pre-line">
                 {{description}}
               </span>
-            </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="plus-min-button" (click)="addmin_cred_counter('-')">-</button>
-        {{cred}}
-        <button type="button" class="plus-min-button" (click)="addmin_cred_counter('+')">+</button>
-        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')" (click)="ret_cred_counter()">Close</button>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="plus-min-button" (click)="addmin_cred_counter('-')">-</button>
+    {{cred}}
+    <button type="button" class="plus-min-button" (click)="addmin_cred_counter('+')">+</button>
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')" (click)="ret_cred_counter()">
+      Close
+    </button>
 
-    </div>
+  </div>
 </ng-template>
 
 <ng-template #sync let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Synchronisation avec l'intra.</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')" (click)="ret_cred_counter()">
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')"
+            (click)="ret_cred_counter()">
       <span aria-hidden="true">&times;</span>
 
     </button>
@@ -40,39 +44,46 @@
     </div>
     <div id="accordeon" class="row" style="height: 60px; text-align: center; margin-top: 10px">
       <div class="offset-2 col-md-8">
-        Votre autologin se récupère sur ce lien de l'intranet : <a href="https://intra.epitech.eu/admin/autolog" target="_blank">https://intra.epitech.eu/admin/autolog</a>.
+        Votre autologin se récupère sur ce lien de l'intranet : <a href="https://intra.epitech.eu/admin/autolog"
+                                                                   target="_blank">https://intra.epitech.eu/admin/autolog</a>.
         <br>Pas d'inquiétude ! Nous ne stockons pas votre autologin.
       </div>
     </div>
   </div>
   <div class="modal-footer">
-  <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')" (click)="load(SyncBar.value)">Actualiser</button>
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')"
+            (click)="load(SyncBar.value)">Actualiser
+    </button>
   </div>
 </ng-template>
 
 <ng-template #content1 let-modal>
-    <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <form>
-            <div class="form-group">
-                <div class="input-group">
-                    <form (submit)="createModule($event); modal.dismiss('Cross click')">
-                        <input id="nameModule" placeholder="Module" type="text"/>
-                        <input id="cred" placeholder="cred" type="number"/>
-                        <button style="background-color: #46CEFC; color: white; padding: 10px; margin-top: 20px; margin-bottom: 20px" type="submit" value="submit" class="btn btn-primary btn-round d-block"><i style="color: white" class="ion ion-ios-power"></i>&nbsp;&nbsp;Créer</button>
-                    </form>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
-    </div>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <div class="input-group">
+          <form (submit)="createModule($event); modal.dismiss('Cross click'); getModulesOnDB()">
+            <input id="nameModule" placeholder="Module" type="text"/>
+            <input id="cred" placeholder="cred" type="number"/>
+            <button
+              style="background-color: #46CEFC; color: white; padding: 10px; margin-top: 20px; margin-bottom: 20px"
+              type="submit" value="submit" class="btn btn-primary btn-round d-block"><i style="color: white"
+                                                                                        class="ion ion-ios-power"></i>&nbsp;&nbsp;Créer
+            </button>
+          </form>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')" (click)="getModulesOnDB()">Save</button>
+  </div>
 </ng-template>
 
 <nav class="row" style="margin: 0 !important;">
@@ -80,8 +91,10 @@
     <span class="spanTitle">YearOrNotYear</span><br>
     <span class="spanSubtitle">An Epitech Project for Epitech Students</span>
   </div>
-    <span>{{firstName}} & {{lastName}} & {{year}}</span>
-    <button routerLink="/logout">Logout</button>
+  <div class="offset-5 col-md-3">
+    <span>{{firstName}}  {{lastName}}  {{year}}</span>
+    <button class="buttonClear" routerLink="/logout" style="width: 30%;">Logout</button>
+  </div>
 </nav>
 <div class="row gradientBar" id="gradient">
   <div class="offset-1 col-md-3">
@@ -101,7 +114,8 @@
     <div class="col-md-6">
       <div class="moduleBlock">
         <div class="row" style="height: 60px;">
-          <span class="col-md-6 spanTitle moduleBlockTitle" style="font-family: 'Roboto', sans-serif">Vos Modules:</span>
+          <span class="col-md-6 spanTitle moduleBlockTitle"
+                style="font-family: 'Roboto', sans-serif">Vos Modules:</span>
           <div class="col-md-3">
             <button class="buttonClear" (click)="open(sync)">Sync<img class="gifimg"></button>
           </div>
@@ -116,20 +130,24 @@
                [cdkDropListData]="itemsHave"
                [cdkDropListConnectedTo]="[doneList]"
                (cdkDropListDropped)="drop($event)">
-            <div class="row moduleBox" *ngFor="let data of itemsHave" cdkDrag>
+            <div cdkDrag class="row moduleBox" *ngFor="let data of itemsHave">
               <div class="col-md-7 moduleName">{{data.name}}</div>
               <div class="col-md-2" style="padding: 0">
                 <div *ngIf="data.status == 'fail'">
-                  <div class="pastilleright"  style="background-color: red" data-toggle="tooltip" data-placement="top" title="Module Echec"></div>
+                  <div class="pastilleright" style="background-color: red" data-toggle="tooltip" data-placement="top"
+                       title="Module Echec"></div>
                 </div>
                 <div *ngIf="data.status == 'ongoing'">
-                  <div class="pastilleright" style="background-color: orange" data-toggle="tooltip" data-placement="top" title="Module en Cours..."></div>
+                  <div class="pastilleright" style="background-color: orange" data-toggle="tooltip" data-placement="top"
+                       title="Module en Cours..."></div>
                 </div>
                 <div *ngIf="data.status == 'valid'">
-                  <div class="pastilleright" style="background-color: lightgreen" data-toggle="tooltip" data-placement="top" title="Module Validé"></div>
+                  <div class="pastilleright" style="background-color: lightgreen" data-toggle="tooltip"
+                       data-placement="top" title="Module Validé"></div>
                 </div>
                 <div *ngIf="data.status == 'notregistered'">
-                  <div class="pastilleright" style="background-color: grey" data-toggle="tooltip" data-placement="top" title="Non Inscrit"></div>
+                  <div class="pastilleright" style="background-color: grey" data-toggle="tooltip" data-placement="top"
+                       title="Non Inscrit"></div>
                 </div>
                 <div (click)="open(content, data)" style="position: absolute; bottom: 0; right: 10px">Détails</div>
               </div>
@@ -143,7 +161,9 @@
       <div class="moduleBlock">
         <div class="row" style="height: 60px;">
           <span class="col-md-7 spanTitle moduleBlockTitle" style="font-family: 'Roboto', sans-serif">Modules Disponibles:</span>
-          <div class="col-md-4"><button (click)="open(content1)" class="addModuleButton">Ajouter un Module</button></div>
+          <div class="col-md-4">
+            <button (click)="open(content1)" class="addModuleButton">Ajouter un Module</button>
+          </div>
         </div>
         <div class="row" style="height: 60px; margin-top: 10px">
           <div class="col-md-12" style="margin-right: 20px; margin-right: 20px; text-align: center">
@@ -157,21 +177,25 @@
                [cdkDropListConnectedTo]="[todoList]"
                (cdkDropListDropped)="drop($event)"
                class="moduleList scrollbar scrollbar-primary"
-                style="max-height: 550px">
-            <div class="row moduleBox" *ngFor="let data of items | filter:'name' : term" cdkDrag>
+               style="max-height: 550px">
+            <div cdkDrag class="row moduleBox" *ngFor="let data of items | filter:'name' : term">
               <div class="col-md-7 moduleName">{{data.name}}</div>
               <div class="col-md-2" style="padding: 0">
                 <div *ngIf="data.status == 'fail'">
-                  <div class="pastilleright"  style="background-color: red" data-toggle="tooltip" data-placement="top" title="Module Echec"></div>
+                  <div class="pastilleright" style="background-color: red" data-toggle="tooltip" data-placement="top"
+                       title="Module Echec"></div>
                 </div>
                 <div *ngIf="data.status == 'ongoing'">
-                  <div class="pastilleright" style="background-color: orange" data-toggle="tooltip" data-placement="top" title="Module en Cours..."></div>
+                  <div class="pastilleright" style="background-color: orange" data-toggle="tooltip" data-placement="top"
+                       title="Module en Cours..."></div>
                 </div>
                 <div *ngIf="data.status == 'valid'">
-                  <div class="pastilleright" style="background-color: lightgreen" data-toggle="tooltip" data-placement="top" title="Module Validé"></div>
+                  <div class="pastilleright" style="background-color: lightgreen" data-toggle="tooltip"
+                       data-placement="top" title="Module Validé"></div>
                 </div>
                 <div *ngIf="data.status == 'notregistered'">
-                  <div class="pastilleright" style="background-color: grey" data-toggle="tooltip" data-placement="top" title="Non Inscrit"></div>
+                  <div class="pastilleright" style="background-color: grey" data-toggle="tooltip" data-placement="top"
+                       title="Non Inscrit"></div>
                 </div>
                 <div (click)="open(content, data)" style="position: absolute; bottom: 0; right: 10px">Détails</div>
               </div>
@@ -182,7 +206,7 @@
       </div>
     </div>
     <div style="float: left; margin: 20px;">
-        <input type="button" class="button-csv" (click)="get_csv()" value="Download CSV">
+      <input type="button" class="button-csv" (click)="get_csv()" value="Download CSV">
     </div>
   </div>
 </div>
