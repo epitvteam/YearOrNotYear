@@ -15,7 +15,7 @@ import {Angular5Csv} from 'angular5-csv/dist/Angular5-csv';
 
 export class DashboardComponent implements OnInit {
   public closeResult;
-  public items;
+  public items = [];
   public itemsHave = [];
   public calcul = 0;
   public cred = 0;

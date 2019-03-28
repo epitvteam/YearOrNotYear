@@ -111,11 +111,11 @@
         </div>
         <div class="row" style="height: 500px">
           <div class="moduleList scrollbar scrollbar-primary"
-               cdkDropList
-               #todoList="cdkDropList"
-               [cdkDropListData]="itemsHave"
-               [cdkDropListConnectedTo]="[doneList]"
-               (cdkDropListDropped)="drop($event)">
+                cdkDropList
+                #todoList="cdkDropList"
+                [cdkDropListData]="itemsHave"
+                [cdkDropListConnectedTo]="[doneList]"
+                (cdkDropListDropped)="drop($event)">
             <div class="row moduleBox" *ngFor="let data of itemsHave" cdkDrag>
               <div class="col-md-7 moduleName">{{data.name}}</div>
               <div class="col-md-2" style="padding: 0">
@@ -142,23 +142,23 @@
     <div class="col-md-6">
       <div class="moduleBlock">
         <div class="row" style="height: 60px;">
-          <span class="col-md-7 spanTitle moduleBlockTitle" style="font-family: 'Roboto', sans-serif">Modules Disponibles:</span>
+          <span class="col-md-7 spanTitle moduleBlockTitle"term style="font-family: 'Roboto', sans-serif">Modules Disponibles:</span>
           <div class="col-md-4"><button (click)="open(content1)" class="addModuleButton">Ajouter un Module</button></div>
         </div>
         <div class="row" style="height: 60px; margin-top: 10px">
           <div class="col-md-12" style="margin-right: 20px; margin-right: 20px; text-align: center">
-            <input [(ngModel)]="term" class="moduleBox searchBar" placeholder="Rechercher..."/>
+            <input type="text" ngModel="term" class="moduleBox searchBar" placeholder="Rechercher..."/>
           </div>
         </div>
         <div class="row" style="height: 500px;">
           <div cdkDropList
-               #doneList="cdkDropList"
-               [cdkDropListData]="items"
-               [cdkDropListConnectedTo]="[todoList]"
-               (cdkDropListDropped)="drop($event)"
-               class="moduleList scrollbar scrollbar-primary"
+                #doneList="cdkDropList"
+                [cdkDropListData]="items"
+                [cdkDropListConnectedTo]="[todoList]"
+                (cdkDropListDropped)="drop($event)"
+                class="moduleList scrollbar scrollbar-primary"
                 style="max-height: 550px">
-            <div class="row moduleBox" *ngFor="let data of items | filter:'name' : term" cdkDrag>
+            <div class="row moduleBox" *ngFor="let data of items | filter:'name' : term" ng-model='term' cdkDrag>
               <div class="col-md-7 moduleName">{{data.name}}</div>
               <div class="col-md-2" style="padding: 0">
                 <div *ngIf="data.status == 'fail'">
