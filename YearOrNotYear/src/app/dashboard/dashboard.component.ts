@@ -6,6 +6,8 @@ import {UserService} from '../user.service';
 import {Router} from '@angular/router';
 import {AuthService} from '../auth.service';
 import {Angular5Csv} from 'angular5-csv/dist/Angular5-csv';
+//import { $ } from 'protractor';
+import $ from 'jquery';
 
 @Component({
   selector: 'app-root',
@@ -134,7 +136,7 @@ export class DashboardComponent implements OnInit {
   }
 
   get_csv() {
-    const tab  = Object.assign([], this.itemsHave);
+    const tab = Object.assign([], this.itemsHave);
     let len = tab.length;
     for (let loop = 0; loop != len ; loop++) {
       delete tab[loop].description;
@@ -150,7 +152,10 @@ export class DashboardComponent implements OnInit {
       noDownload: false,
       headers: ["Nom du module", "Année", "Crédits", "Etat"]
     };
-    new Angular5Csv(tab, this.lastName.concat(this.firstName), options);
+    if (len > 0)
+      new Angular5Csv(tab, this.lastName.concat(this.firstName), options);
+    else
+      alert("Aucun module à exporter");
   }
 
   get_credit() {
@@ -263,6 +268,14 @@ export class DashboardComponent implements OnInit {
         this.items = this.items.concat(each);
       }
       i++;
+    }
+  }
+
+  showProfile(state) {
+    if (state === 1) {
+      $('.profile').fadeIn(100);
+    } else {
+      $('.profile').fadeOut(50);
     }
   }
 }

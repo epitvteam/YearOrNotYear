@@ -44,8 +44,7 @@
     </div>
     <div id="accordeon" class="row" style="height: 60px; text-align: center; margin-top: 10px">
       <div class="offset-2 col-md-8">
-        Votre autologin se récupère sur ce lien de l'intranet : <a href="https://intra.epitech.eu/admin/autolog"
-                                                                   target="_blank">https://intra.epitech.eu/admin/autolog</a>.
+        Votre autologin se récupère sur ce lien de l'intranet : <a href="https://intra.epitech.eu/admin/autolog" target="_blank">https://intra.epitech.eu/admin/autolog</a>.
         <br>Pas d'inquiétude ! Nous ne stockons pas votre autologin.
       </div>
     </div>
@@ -73,8 +72,7 @@
             <input id="cred" placeholder="cred" type="number"/>
             <button
               style="background-color: #46CEFC; color: white; padding: 10px; margin-top: 20px; margin-bottom: 20px"
-              type="submit" value="submit" class="btn btn-primary btn-round d-block"><i style="color: white"
-                                                                                        class="ion ion-ios-power"></i>&nbsp;&nbsp;Créer
+              type="submit" value="submit" class="btn btn-primary btn-round d-block"><i style="color: white" class="ion ion-ios-power"></i>&nbsp;&nbsp;Créer
             </button>
           </form>
         </div>
@@ -92,8 +90,19 @@
     <span class="spanSubtitle">An Epitech Project for Epitech Students</span>
   </div>
   <div class="offset-5 col-md-3">
-    <span>{{firstName}}  {{lastName}}  {{year}}</span>
-    <button class="buttonClear" routerLink="/logout" style="width: 30%;">Logout</button>
+    <div class="row">
+      <div class="offset-4 col-8">
+        <img id="img1" class="img_profile" (mouseenter)="showProfile(1)" src="http://www.are.fr/wp-content/uploads/2016/05/logo-homme.png">
+        <div class="profile" (mouseleave)="showProfile(0)">
+          <span class="text_profile">
+            <p>{{firstName}} {{lastName}}</p>
+            <p class="promo_profile">Promo {{year}}</p>
+            <button class="csv_profile" (click)="get_csv()" >Export CSV</button>
+            <button class="logout_profile" routerLink="/logout">Logout</button>
+          </span>
+        </div>
+      </div>
+    </div>
   </div>
 </nav>
 <div class="row gradientBar" id="gradient">
@@ -167,7 +176,7 @@
         </div>
         <div class="row" style="height: 60px; margin-top: 10px">
           <div class="col-md-12" style="margin-right: 20px; margin-right: 20px; text-align: center">
-            <input type="text" ngModel="term" class="moduleBox searchBar" placeholder="Rechercher..."/>
+            <input type="text" ([ngmodel])="term" class="moduleBox searchBar" placeholder="Rechercher..."/>
           </div>
         </div>
         <div class="row" style="height: 500px;">
@@ -205,11 +214,10 @@
         </div>
       </div>
     </div>
-    <div style="float: left; margin: 20px;">
-      <input type="button" class="button-csv" (click)="get_csv()" value="Download CSV">
-    </div>
   </div>
 </div>
+    <!-- <span>{{firstName}}  {{lastName}}  {{year}}</span> http://www.are.fr/wp-content/uploads/2016/05/logo-homme.png
+    <button class="buttonClear" routerLink="/logout" style="width: 30%;">Logout</button> -->
 
 <!--<div class="container-fluid" style="margin-top: 160px; height: 50%;">
     <div class="row">
