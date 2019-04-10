@@ -6,6 +6,8 @@ import {UserService} from '../user.service';
 import {Router} from '@angular/router';
 import {AuthService} from '../auth.service';
 import {Angular5Csv} from 'angular5-csv/dist/Angular5-csv';
+//import { $ } from 'protractor';
+import $ from 'jquery';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +17,7 @@ import {Angular5Csv} from 'angular5-csv/dist/Angular5-csv';
 
 export class DashboardComponent implements OnInit {
   public closeResult;
-  public items;
+  public items = [];
   public itemsHave = [];
   public calcul = 0;
   public cred = 0;
@@ -39,7 +41,6 @@ export class DashboardComponent implements OnInit {
 
     if (errors.length === 0) {
       this.auth.createModule(nameModule, cred).subscribe(data => {
-        console.log(data);
         if (data.success) {
           console.log('Module set in DB');
         }
@@ -70,7 +71,6 @@ export class DashboardComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    console.log(event);
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -136,39 +136,26 @@ export class DashboardComponent implements OnInit {
   }
 
   get_csv() {
-    var data = [
-      {
-        name: "Constant LOUBIER",
-        age: 19,
-        Credit: 80,
-        description: "I am London"
-      },
-      {
-        name: "Pierre HERMAN",
-        age: 19,
-        Credit: 80,
-        description: "I am Dublin"
-      },
-      {
-        name: "Hugo CASTELLI",
-        age: 19,
-        Credit: 80,
-        description: "I am Paris"
-      },
-    ];
-
+    const tab = Object.assign([], this.itemsHave);
+    let len = tab.length;
+    for (let loop = 0; loop != len ; loop++) {
+      delete tab[loop].description;
+    }
     var options = {
       fieldSeparator: ',',
       quoteStrings: '"',
       decimalseparator: '.',
       showLabels: true,
       showTitle: true,
+      title: 'Votre simulation de crédits',
       useBom: true,
       noDownload: false,
-      headers: ["Name", "Age", "Credit", "Description"]
+      headers: ["Nom du module", "Année", "Crédits", "Etat"]
     };
-
-    new Angular5Csv(data, 'MyFileName', options);
+    if (len > 0)
+      new Angular5Csv(tab, this.lastName.concat(this.firstName), options);
+    else
+      alert("Aucun module à exporter");
   }
 
   get_credit() {
@@ -178,6 +165,12 @@ export class DashboardComponent implements OnInit {
         this.calcul += Number(loop.credits);
       }
     }
+  }
+
+  async getScolarYear(autologin) {
+    const URL = 'https://intra.epitech.eu/' + autologin + '/user/?format=json';
+    let data = await this.http.get<any>(URL).toPromise();
+    return (data.scolaryear);
   }
 
   async getDescription(autologin, modulecode, year, city) {
@@ -191,10 +184,10 @@ export class DashboardComponent implements OnInit {
     var JsonInArray;
     var descriptions;
     var datas = await this.http.get<any>(baseUrl).toPromise();
+    var scolarY = await this.getScolarYear(autologin);
 
     for (let entry of datas) {
-      //REPLACE 2018 BY YEAR
-      if ((entry.status == 'ongoing' || entry.status == 'valid' || entry.status == 'fail') && entry.scolaryear == 2018) {
+      if ((entry.status == 'ongoing' || entry.status == 'valid' || entry.status == 'fail') && entry.scolaryear == scolarY) {
         descriptions = await this.getDescription(autologin, entry.code, entry.scolaryear, entry.codeinstance);
         JsonInArray = {
           'name': entry.title,
@@ -219,12 +212,10 @@ export class DashboardComponent implements OnInit {
     var JsonInArray;
     var descriptions;
     var datas = await this.http.get<any>(baseUrl).toPromise();
-    if (!datas) {
-      console.log('tg');
-    }
+    var scolarY = await this.getScolarYear(autologin);
+
     for (let entry of datas) {
-      //REPLACE 2018 BY YEAR
-      if (entry.status == 'notregistered' && entry.scolaryear == 2018) {
+      if (entry.status == 'notregistered' && entry.scolaryear == scolarY) {
         descriptions = await this.getDescription(autologin, entry.code, entry.scolaryear, entry.codeinstance);
         JsonInArray = {
           'name': entry.title, 'scolaryear': entry.scolaryear, 'description': descriptions.description,
@@ -277,6 +268,14 @@ export class DashboardComponent implements OnInit {
         this.items = this.items.concat(each);
       }
       i++;
+    }
+  }
+
+  showProfile(state) {
+    if (state === 1) {
+      $('.profile').fadeIn(100);
+    } else {
+      $('.profile').fadeOut(50);
     }
   }
 }
