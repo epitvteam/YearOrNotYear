@@ -14,7 +14,6 @@ export class FilterPipe implements PipeTransform {
     }
 
     term = term.toLowerCase();
-
     return items.filter(it => {
       return it[prop].toLowerCase().includes(term);
     });
