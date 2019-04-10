@@ -180,7 +180,7 @@ export class DashboardComponent implements OnInit {
 
   async getScolarYear(autologin) {
     const URL = 'https://intra.epitech.eu/' + autologin + '/user/?format=json';
-    let data = await this.http.get<any>(URL).toPromise();
+    const data = await this.http.get<any>(URL).toPromise();
     return (data.scolaryear);
   }
 
