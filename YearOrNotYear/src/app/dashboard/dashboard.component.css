@@ -376,7 +376,7 @@ nav {
 
 .csv_profile {
   position: absolute;
-  top: 180%;
+  top: 150%;
   border: 0;
   background-color: #F3F3F3;
   color: #3A3985;
@@ -384,10 +384,46 @@ nav {
 
 .logout_profile {
   position: absolute;
-  top: 240%;
+  top: 200%;
   border: 0;
   background-color: #F3F3F3;
   color: #3A3985;
+}
+
+.issue_profile {
+  position: absolute;
+  top: 250%;
+  border: 0;
+  background-color: #F3F3F3;
+  color: #3A3985;
+}
+
+.addmodules {
+  width: 36%;
+  font-size: 17px;
+  outline: none;
+  border: 0;
+  border-bottom: 1px solid #3A3985;
+  position: relative;
+  left: 2%;
+  border-radius: 0px;
+}
+
+.addmodulescred::-webkit-inner-spin-button,
+.addmodulescred::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.addmodulescred {
+  width: 11%;
+  font-size: 17px;
+  position: relative;
+  outline: none;
+  border: 0;
+  border-bottom: 1px solid #3A3985;
+  left: 2%;
+  border-radius: 0px;
 }
 
 @media screen and (min-width: 1401px) {
@@ -403,19 +439,25 @@ nav {
   .logout_profile {
     font-size: 17px;
   }
+  .issue_profile {
+    font-size: 17px;
+  }
 }
 
 @media screen and (max-width: 1400px) {
   .text_profile {
-    font-size: 12px;
+    font-size: 14px;
   }
   .promo_profile {
-    font-size: 7px;
+    font-size: 12px;
   }
   .csv_profile {
-    font-size: 7px;
+    font-size: 12px;
   }
   .logout_profile {
-    font-size: 7px;
+    font-size: 12px;
+  }
+  .issue_profile {
+    font-size: 12px;
   }
 }

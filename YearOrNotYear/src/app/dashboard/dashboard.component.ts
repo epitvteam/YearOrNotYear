@@ -21,8 +21,9 @@ export class DashboardComponent implements OnInit {
   public itemsHave = [];
   public calcul = 0;
   public cred = 0;
-  public ModuleName;
+  public ModuleName = 'NULL';
   public description = 'NULL';
+  public imgLink = 'http://www.are.fr/wp-content/uploads/2016/05/logo-homme.png';
   email = 'Loading email';
   firstName = 'Loading firstName';
   lastName = 'Loading lastName';
@@ -141,6 +142,7 @@ export class DashboardComponent implements OnInit {
     for (let loop = 0; loop != len ; loop++) {
       delete tab[loop].description;
     }
+
     var options = {
       fieldSeparator: ',',
       quoteStrings: '"',
@@ -170,6 +172,7 @@ export class DashboardComponent implements OnInit {
   async getScolarYear(autologin) {
     const URL = 'https://intra.epitech.eu/' + autologin + '/user/?format=json';
     let data = await this.http.get<any>(URL).toPromise();
+    this.imgLink = 'https://intra.epitech.eu/' + autologin + data.picture;
     return (data.scolaryear);
   }
 
