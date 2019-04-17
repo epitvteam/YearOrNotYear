@@ -6,7 +6,6 @@ import {UserService} from '../user.service';
 import {Router} from '@angular/router';
 import {AuthService} from '../auth.service';
 import {Angular5Csv} from 'angular5-csv/dist/Angular5-csv';
-//import { $ } from 'protractor';
 import $ from 'jquery';
 
 @Component({
@@ -21,8 +20,9 @@ export class DashboardComponent implements OnInit {
   public itemsHave = [];
   public calcul = 0;
   public cred = 0;
-  public ModuleName;
+  public ModuleName = 'NULL';
   public description = 'NULL';
+  public imgLink = 'http://www.are.fr/wp-content/uploads/2016/05/logo-homme.png';
   email = 'Loading email';
   firstName = 'Loading firstName';
   lastName = 'Loading lastName';
@@ -32,6 +32,13 @@ export class DashboardComponent implements OnInit {
               private router: Router, private auth: AuthService) {
   }
 
+  display() {
+    $('#lol1').removeClass('displayNone');
+  }
+
+  dispNone() {
+    $('#lol1').addClass('displayNone');
+  }
   createModule(event) {
     event.preventDefault();
     const target = event.target;
@@ -141,6 +148,7 @@ export class DashboardComponent implements OnInit {
     for (let loop = 0; loop != len ; loop++) {
       delete tab[loop].description;
     }
+
     var options = {
       fieldSeparator: ',',
       quoteStrings: '"',
@@ -169,7 +177,8 @@ export class DashboardComponent implements OnInit {
 
   async getScolarYear(autologin) {
     const URL = 'https://intra.epitech.eu/' + autologin + '/user/?format=json';
-    const data = await this.http.get<any>(URL).toPromise();
+    let data = await this.http.get<any>(URL).toPromise();
+    this.imgLink = 'https://intra.epitech.eu/' + autologin + data.picture;
     return (data.scolaryear);
   }
 

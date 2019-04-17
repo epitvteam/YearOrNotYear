@@ -1,6 +1,6 @@
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Description</h4>
+    <h4 class="modal-title" id="modal-basic-title">{{ModuleName}}</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')"
             (click)="ret_cred_counter()">
       <span aria-hidden="true">&times;</span>
@@ -58,29 +58,33 @@
 
 <ng-template #content1 let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <h4 class="modal-title" id="modal-basic-title" >Ajouter un modules</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    <form>
-      <div class="form-group">
-        <div class="input-group">
-          <form (submit)="createModule($event); modal.dismiss('Cross click'); getModulesOnDB()">
-            <input id="nameModule" placeholder="Module" type="text"/>
-            <input id="cred" placeholder="cred" type="number"/>
-            <button
-              style="background-color: #46CEFC; color: white; padding: 10px; margin-top: 20px; margin-bottom: 20px"
-              type="submit" value="submit" class="btn btn-primary btn-round d-block"><i style="color: white" class="ion ion-ios-power"></i>&nbsp;&nbsp;Créer
-            </button>
-          </form>
-        </div>
+    <div class="row">
+      <div class="offset-2 col-md-8">
+        <form>
+          <div class="form-group">
+            <div class="input-group">
+              <form (submit)="createModule($event); modal.dismiss('Cross click'); getModulesOnDB()">
+                <p>
+                  <label style="font-size: 19px" for="mon_id">Nom du module:</label>
+                  <input class="addmodules" id="nameModule" placeholder="Ex: S0 - Coding Club" type="text" onkeypress="this.style.width = ((this.value.length + 1) * 8) + 'px';"/>
+                </p>
+                <label style="font-size: 19px" for="mon_id">Nombre(s) de credit(s):</label>
+                <input class="addmodulescred" id="cred" placeholder="Ex: 60" type="number" onkeypress="this.style.width = ((this.value.length + 1) * 8) + 'px';"/>
+              </form>
+            </div>
+          </div>
+        </form>
       </div>
-    </form>
+    </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')" (click)="getModulesOnDB()">Save</button>
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')" (click)="getModulesOnDB()">Sauvgarder</button>
   </div>
 </ng-template>
 
@@ -92,13 +96,14 @@
   <div class="offset-5 col-md-3">
     <div class="row">
       <div class="offset-4 col-8">
-        <img id="img1" class="img_profile" (mouseenter)="showProfile(1)" src="http://www.are.fr/wp-content/uploads/2016/05/logo-homme.png">
+        <img id="img1" class="img_profile" (mouseenter)="showProfile(1)" src={{imgLink}}>
         <div class="profile" (mouseleave)="showProfile(0)">
           <span class="text_profile">
             <p>{{firstName}} {{lastName}}</p>
             <p class="promo_profile">Promo {{year}}</p>
             <button class="csv_profile" (click)="get_csv()" >Export CSV</button>
             <button class="logout_profile" routerLink="/logout">Logout</button>
+            <a href="https://github.com/epitvteam/YearOrNotYear/issues/new" target="_blank"><button class="issue_profile">Report an issue</button></a>
           </span>
         </div>
       </div>
@@ -117,13 +122,12 @@
     </div>
   </div>
 </div>
-
 <div class="container-fluid" style="height: 100%; background-color: #F3F3F3">
   <div class="row">
     <div class="col-md-6">
       <div class="moduleBlock">
         <div class="row" style="height: 60px;">
-          <span class="col-md-6 spanTitle moduleBlockTitle"
+          <span class="col-md-3 spanTitle moduleBlockTitle"
                 style="font-family: 'Roboto', sans-serif">Vos Modules:</span>
           <div class="col-md-3">
             <button class="buttonClear" (click)="open(sync)">Sync<img class="gifimg"></button>
@@ -131,6 +135,12 @@
           <div class="col-md-2">
             <button class="buttonClear" (click)="clear()">Vider</button>
           </div>
+          <div class="col-md-3">
+            <button class="buttonClear" (click)="display()">Sauvegarder</button>
+          </div>
+        </div>
+        <div id="lol1" style="margin-bottom:20px; margin-top:20px; margin-left: 50px; margin-right: 50px;color:white;background-image: linear-gradient(-106deg, #F0712A, #FCCB4A)" class="alert m-t-1 text-xs-center displayNone" role="alert">
+          Vos crédits sont sauvegardés ! <i style="margin-top: 2px;float: right;font-size: 21px; cursor: pointer" (click)="dispNone()" class="ion ion-ios-close"></i>
         </div>
         <div class="row" style="height: 500px">
           <div class="moduleList scrollbar scrollbar-primary"
@@ -176,7 +186,7 @@
         </div>
         <div class="row" style="height: 60px; margin-top: 10px">
           <div class="col-md-12" style="margin-right: 20px; margin-right: 20px; text-align: center">
-            <input type="text" ([ngmodel])="term" class="moduleBox searchBar" placeholder="Rechercher..."/>
+            <input type="text" [(ngModel)]="term" class="moduleBox searchBar" placeholder="Rechercher..."/>
           </div>
         </div>
         <div class="row" style="height: 500px;">
@@ -187,7 +197,7 @@
                (cdkDropListDropped)="drop($event)"
                class="moduleList scrollbar scrollbar-primary"
                style="max-height: 550px">
-            <div cdkDrag class="row moduleBox" *ngFor="let data of items | filter:'name' : term">
+            <div class="row moduleBox" *ngFor="let data of items | filter:'name' : term" cdkDrag>
               <div class="col-md-7 moduleName">{{data.name}}</div>
               <div class="col-md-2" style="padding: 0">
                 <div *ngIf="data.status == 'fail'">
@@ -216,7 +226,6 @@
     </div>
 
   </div>
-  <a href="https://github.com/epitvteam/YearOrNotYear/issues/new" target="_blank">Report an issue</a>
 </div>
     <!-- <span>{{firstName}}  {{lastName}}  {{year}}</span> http://www.are.fr/wp-content/uploads/2016/05/logo-homme.png
     <button class="buttonClear" routerLink="/logout" style="width: 30%;">Logout</button> -->
