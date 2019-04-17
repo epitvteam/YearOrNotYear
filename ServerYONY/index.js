@@ -50,7 +50,7 @@ app.post('/api/login', async (req, res) => {
         req.session.save();
         console.log('Log In correct');
     }
-    //res.send('k');
+
 });
 
 app.get('/api/isloggedin', (req, res) => {
@@ -209,5 +209,34 @@ app.post('/api/moduleCreate', async (req, res) => {
         message: 'Create'
     });
 });
+
+app.post('/api/updateHave', async (req, res) => {
+
+    const user = await User.findOne({email: req.session.user});
+    if (!user) {
+        res.json({
+            success: false,
+            message: 'invalid'
+        });
+        return
+    }
+    await user.create(
+        {
+            email: req.session.user
+        },
+        {
+            $set: {
+                "modulesAdd.$": {
+                    "name": req.body.nameModule,
+                    "credits": req.body.cred
+                }
+            }
+        });
+    res.json({
+        success: true,
+        message: 'Create'
+    });
+});
+
 
 app.listen(1234, () => console.log('Server listening at 1234'));
