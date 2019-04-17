@@ -6,7 +6,6 @@ import {UserService} from '../user.service';
 import {Router} from '@angular/router';
 import {AuthService} from '../auth.service';
 import {Angular5Csv} from 'angular5-csv/dist/Angular5-csv';
-//import { $ } from 'protractor';
 import $ from 'jquery';
 
 @Component({
@@ -32,6 +31,13 @@ export class DashboardComponent implements OnInit {
               private router: Router, private auth: AuthService) {
   }
 
+  display() {
+    $('#lol1').removeClass('displayNone');
+  }
+
+  dispNone() {
+    $('#lol1').addClass('displayNone');
+  }
   createModule(event) {
     event.preventDefault();
     const target = event.target;

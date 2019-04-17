@@ -6,6 +6,21 @@
   font-style: normal;
 }
 
+.alert-success {
+  background-color: #68C934;
+  border-color: #53a02a;
+  color: #fff;
+}
+.alert-success hr {
+  border-top-color: #498c24;
+}
+.alert-success .alert-link {
+  color: #e6e6e6;
+}
+.displayNone {
+  display: none;
+}
+
 .example-box {
   padding: 20px 10px;
   border-bottom: solid 1px #ccc !important;

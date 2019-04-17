@@ -61,7 +61,7 @@
 }
 
 .displayn {
-  display: none;
+  display: none !important;
 }
 
 /* The alert message box */
