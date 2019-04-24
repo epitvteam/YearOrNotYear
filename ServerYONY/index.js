@@ -226,7 +226,7 @@ app.post('/api/updateHave', async (req, res) => {
         },
         {
             $set: {
-                "modulesAdd.$": {
+                "modulesHave.$": {
                     "name": req.body.nameModule,
                     "credits": req.body.cred
                 }

@@ -5,6 +5,7 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {UserService} from '../user.service';
 import {Router} from '@angular/router';
 import {AuthService} from '../auth.service';
+import {saveClass} from '../localStorage.service';
 import {Angular5Csv} from 'angular5-csv/dist/Angular5-csv';
 import $ from 'jquery';
 
@@ -29,7 +30,7 @@ export class DashboardComponent implements OnInit {
   year = 'Loading year';
 
   constructor(private http: HttpClient, private modalService: NgbModal, private user: UserService,
-              private router: Router, private auth: AuthService) {
+              private router: Router, private auth: AuthService, public local: saveClass) {
   }
 
   display() {
@@ -39,6 +40,7 @@ export class DashboardComponent implements OnInit {
   dispNone() {
     $('#lol1').addClass('displayNone');
   }
+
   createModule(event) {
     event.preventDefault();
     const target = event.target;
@@ -145,7 +147,7 @@ export class DashboardComponent implements OnInit {
   get_csv() {
     const tab = Object.assign([], this.itemsHave);
     let len = tab.length;
-    for (let loop = 0; loop != len ; loop++) {
+    for (let loop = 0; loop != len; loop++) {
       delete tab[loop].description;
     }
 
