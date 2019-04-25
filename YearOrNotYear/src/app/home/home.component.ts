@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {AuthService} from '../auth.service';
 import {Router} from '@angular/router';
-import {selector} from 'rxjs-compat/operator/publish';
 import * as $ from 'jquery';
 
 @Component({
@@ -12,9 +11,23 @@ import * as $ from 'jquery';
 })
 export class HomeComponent {
   closeResult: string;
+  model: any = {};
 
   constructor(private modalService: NgbModal, private auth: AuthService, private router: Router) {
   }
+
+  onSubmit() {
+    console.log(this.model.email, this.model.password, this.model.firstName, this.model.lastName, this.model.promo);
+
+    this.auth.registerUser(this.model.email, this.model.password, this.model.firstName, this.model.lastName,
+      this.model.promo).subscribe(data => {
+      console.log(data);
+      if (data.success) {
+        this.router.navigate(['dashboard']);
+      }
+    });
+  }
+
   loginUser(event) {
     event.preventDefault();
     const target = event.target;
@@ -32,41 +45,6 @@ export class HomeComponent {
     console.log(username, password);
   }
 
-  RegisterUser(event) {
-    event.preventDefault();
-    const target = event.target;
-    const errors = [];
-    const email = target.querySelector('#Remail').value;
-    const password = target.querySelector('#Rpassword').value;
-    const cpassword = target.querySelector('#Rcpassword').value;
-    const firstName = target.querySelector('#RfirstName').value;
-    const lastName = target.querySelector('#RlastName').value;
-    const year = target.querySelector('#Ryear').value;
-
-    if (password != cpassword) {
-      errors.push('Passswords do not match');
-      $('#pasid').removeClass('displayn');
-    }
-    else
-      $('#pasid').addClass('displayn');
-    if  (password.length < 8 || password.lenght < 8) {
-      errors.push('Password is to short');
-      $('#err').removeClass('displayn');
-    }
-    if (password.length >= 8) {
-      $('#err').addClass('displayn');
-    }
-    if (errors.length === 0) {
-      this.auth.registerUser(email, password, firstName, lastName, year).subscribe(data => {
-        console.log(data);
-        if (data.success) {
-          this.router.navigate(['dashboard']);
-        }
-      });
-    }
-    console.log(email, password, firstName, lastName, year);
-  }
-
   open(content) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size: 'lg'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -81,7 +59,7 @@ export class HomeComponent {
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       return 'by clicking on a backdrop';
     } else {
-      return  `with: ${reason}`;
+      return `with: ${reason}`;
     }
   }
 }

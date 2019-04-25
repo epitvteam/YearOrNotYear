@@ -5,8 +5,8 @@ import {HttpClientModule} from '@angular/common/http';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {HomeRoutingModule} from './home-routing.module';
-
 import {HomeComponent} from './home.component';
+import {MustMatchDirective} from './_helpers/must-match.directive';
 
 @NgModule({
   imports: [
@@ -17,7 +17,8 @@ import {HomeComponent} from './home.component';
     HttpClientModule
   ],
   declarations: [
-    HomeComponent
+    HomeComponent,
+    MustMatchDirective
   ]
 })
 export class HomeModule {

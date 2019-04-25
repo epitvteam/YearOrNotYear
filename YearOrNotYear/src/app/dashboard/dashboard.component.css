@@ -409,6 +409,7 @@ nav {
   position: absolute;
   top: 250%;
   border: 0;
+  width: 131px !important;
   background-color: #F3F3F3;
   color: #3A3985;
 }

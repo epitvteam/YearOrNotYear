@@ -34,30 +34,72 @@
         </button>
     </div>
     <div class="modal-body">
-        <form class="formlog" (submit)="RegisterUser($event)">
+        <form name="form container" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" class="formlog" [mustMatch]="['password', 'confirmPassword']" novalidate>
             <h1>Inscription</h1>
             <p>Remplis le formulaire d'inscription</p>
-            <div id="err" class="displayn alert">
-                <span class="displayn closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                Entrer un mot de passe de plus de 8 caractères svp.
+            <div class="text-center">
+                <div style="width: 80%; margin: auto; margin-bottom: 10px" class="form-group">
+                    <input type="text" class="form-control inputlog" name="firstName" placeholder="Prénom"
+                           [(ngModel)]="model.firstName" #firstName="ngModel"
+                           [ngClass]="{ 'is-invalid': f.submitted && firstName.invalid }" required/>
+                    <div style="text-align: left" *ngIf="f.submitted && firstName.invalid" class="invalid-feedback">
+                        <div *ngIf="firstName.errors.required">Prénom requis</div>
+                    </div>
+                </div>
+                <div style="width: 80%; margin: auto; margin-bottom: 10px" class="form-group">
+                    <input type="text" class="form-control inputlog" name="lastName" placeholder="Nom"
+                           [(ngModel)]="model.lastName" #lastName="ngModel"
+                           [ngClass]="{ 'is-invalid': f.submitted && lastName.invalid }" required/>
+                    <div style="text-align: left !important;" *ngIf="f.submitted && lastName.invalid"
+                         class="invalid-feedback">
+                        <div *ngIf="lastName.errors.required">Nom requis</div>
+                    </div>
+                </div>
+                <div style="width: 80%; margin: auto; margin-bottom: 10px" class="form-group">
+                    <input type="text" class="form-control inputlog" name="email" placeholder="E-mail"
+                           [(ngModel)]="model.email" #email="ngModel"
+                           [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required email/>
+                    <div style="text-align: left !important;" *ngIf="f.submitted && email.invalid"
+                         class="invalid-feedback">
+                        <div *ngIf="email.errors.required">E-mail requis</div>
+                        <div *ngIf="email.errors.email">E-mail doit être une adresse e-mail valide</div>
+                    </div>
+                </div>
+                <div style="width: 80%; margin: auto; margin-bottom: 10px" class="form-group">
+                    <input type="password" class="form-control inputlog" name="password" placeholder="Mot de passe"
+                           [(ngModel)]="model.password" #password="ngModel"
+                           [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" required minlength="6"/>
+                    <div style="text-align: left !important;" *ngIf="f.submitted && password.invalid"
+                         class="invalid-feedback">
+                        <div *ngIf="password.errors.required">Mot de passe est requis</div>
+                        <div *ngIf="password.errors.minlength">Le mot de passe doit être au moins de 6 caractères</div>
+                    </div>
+                </div>
+                <div style="width: 80%; margin: auto; margin-bottom: 10px" class="form-group">
+                    <input type="password" class="form-control inputlog" name="confirmPassword"
+                           placeholder="Retaper votre mot de passe" [(ngModel)]="model.confirmPassword"
+                           #confirmPassword="ngModel"
+                           [ngClass]="{ 'is-invalid': f.submitted && confirmPassword.invalid }" required/>
+                    <div style="text-align: left !important;" *ngIf="f.submitted && confirmPassword.invalid"
+                         class="invalid-feedback">
+                        <div *ngIf="confirmPassword.errors.required">Confirmer le mot de passe est requis</div>
+                        <div *ngIf="confirmPassword.errors.mustMatch">Les mots de passe doivent correspondre</div>
+                    </div>
+                </div>
+                <div style="width: 80%; margin: auto; margin-bottom: 10px" class="form-group">
+                    <input type="number" class="form-control inputlog" name="promo"
+                           placeholder="Année de promotion" [(ngModel)]="model.promo"
+                           #promo="ngModel"
+                           [ngClass]="{ 'is-invalid': f.submitted && promo.invalid }" required/>
+                    <div style="text-align: left !important;" *ngIf="f.submitted && promo.invalid"
+                         class="invalid-feedback">
+                        <div *ngIf="promo.errors.required">Année de promotion requis</div>
+                    </div>
+                </div>
+                <div class="form-group col-12">
+                    <button class="btn btn-primary">S'inscrire</button>
+                </div>
             </div>
-            <div id="entre" class="displayn alert">
-                <span class="displayn closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                Merci de compléter toutes les entrées.
-            </div>
-            <div id="pasid" class="displayn alert">
-                <span class="displayn closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                Les deux mots de passe ne sont pas identiques.
-            </div>
-            <input class="inputlog" type="email" placeholder="E-mail" id="Remail" required/>
-            <input class="inputlog" type="password" placeholder="Mot de passe" id="Rpassword" minlength="8" required/>
-            <input class="inputlog" type="password" placeholder="Retaper votre mot de passe" id="Rcpassword"
-                   minlength="8" required/>
-            <input class="inputlog" type="text" placeholder="Prénom" id="RfirstName" required/>
-            <input class="inputlog" type="text" placeholder="Nom" id="RlastName" required/>
-            <input class="inputlog" type="number" placeholder="Année de promotion" id="Ryear" required/>
-            <br>
-            <button class="btnlog" type="submit" value="submit">S'inscrire</button>
         </form>
     </div>
 </ng-template>

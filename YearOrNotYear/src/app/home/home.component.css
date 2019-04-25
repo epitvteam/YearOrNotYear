@@ -24,14 +24,18 @@
   text-align: center;
 }
 
+.was-validated .custom-select:invalid:focus, .custom-select.is-invalid:focus {
+  border-color: white;
+}
+
 .inputlog {
   border: none;
   border-bottom: 1px solid lightgrey;
   display: inline-block;
-  width: 70%;
-  margin-top: 30px;
+  margin-top: 10px;
   text-align: left;
   font-size: 20px;
+  margin-bottom: 0 !important;
 }
 
 .inputlog:hover {
