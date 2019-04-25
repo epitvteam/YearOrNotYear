@@ -17,13 +17,12 @@ export class HomeComponent {
   }
 
   onSubmit() {
-    console.log(this.model.email, this.model.password, this.model.firstName, this.model.lastName, this.model.promo);
-
     this.auth.registerUser(this.model.email, this.model.password, this.model.firstName, this.model.lastName,
       this.model.promo).subscribe(data => {
-      console.log(data);
       if (data.success) {
-        this.router.navigate(['dashboard']);
+        $('#success').removeClass('displayn');
+      } else {
+        $('#err').removeClass('displayn');
       }
     });
   }
@@ -38,8 +37,9 @@ export class HomeComponent {
       if (data.success) {
         this.router.navigate(['dashboard']);
         this.auth.setLoggedIn(true);
+        this.modalService.dismissAll();
       } else {
-        window.alert(data.message);
+        $('#err1').removeClass('displayn');
       }
     });
     console.log(username, password);

@@ -6,13 +6,21 @@
         </button>
     </div>
     <div class="modal-body">
-        <form class="formlog" (submit)="loginUser($event); modal.dismiss('Cross click')">
+        <form class="formlog" (submit)="loginUser($event)">
             <h1>Bienvenue</h1>
             <p>Remplis les entrées pour te connecter</p>
-            <input class="inputlog" type="text" placeholder="E-mail" id="username"/>
-            <input class="inputlog" type="password" placeholder="Mot de passe" id="password"/>
+            <div id="err1" class="displayn alert">
+                <span class="displayn closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                Votre mot de passe ou votre e-mail est faux.
+            </div>
+            <div style="width: 80%; margin: auto; margin-bottom: 10px" class="form-group">
+                <input class="form-control inputlog" type="text" placeholder="E-mail" id="username"/>
+            </div>
+            <div style="width: 80%; margin: auto; margin-bottom: 10px" class="form-group">
+                <input class="form-control inputlog" type="password" placeholder="Mot de passe" id="password"/>
+            </div>
             <br>
-            <button class="raw btnlog" style="" type="submit" value="submit">Se connecter</button>
+            <button class="raw btnlog" type="submit" value="submit">Se connecter</button>
         </form>
         <div class="container">
             <div class="row">
@@ -34,9 +42,18 @@
         </button>
     </div>
     <div class="modal-body">
-        <form name="form container" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" class="formlog" [mustMatch]="['password', 'confirmPassword']" novalidate>
+        <form name="form container" (ngSubmit)="f.form.valid && onSubmit() && modal.dismiss('Cross click')" #f="ngForm"
+              class="formlog" [mustMatch]="['password', 'confirmPassword']" novalidate>
             <h1>Inscription</h1>
             <p>Remplis le formulaire d'inscription</p>
+            <div id="err" class="displayn alert">
+                <span class="displayn closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                Cette adresse email est déjà enregistrée.
+            </div>
+            <div id="success" class="displayn alertS">
+                <span class="displayn closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                Votre compte a bien été créé.
+            </div>
             <div class="text-center">
                 <div style="width: 80%; margin: auto; margin-bottom: 10px" class="form-group">
                     <input type="text" class="form-control inputlog" name="firstName" placeholder="Prénom"
